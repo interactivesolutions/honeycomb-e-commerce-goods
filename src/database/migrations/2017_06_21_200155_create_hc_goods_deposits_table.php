@@ -19,7 +19,7 @@ class CreateHcGoodsDepositsTable extends Migration {
 			$table->timestamps();
 			$table->softDeletes();
 			$table->float('value', 10, 0);
-			$table->string('country_id', 36)->index('country_id');
+			$table->string('country_id', 36)->index('fk_hcg_deposits_hc_regions_countries1_idx');
 		});
 	}
 
