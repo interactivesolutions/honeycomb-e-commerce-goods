@@ -1,6 +1,6 @@
 <?php
 
-//honeycomb-e-commerce-goods/src/app/routes/admin/routes.e.commerce.taxes.php
+//honeycomb-e-commerce-goods/src/app/routes/admin/00_routes.e.commerce.taxes.php
 
 
 Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth']], function ()
@@ -32,7 +32,39 @@ Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth'
 });
 
 
-//honeycomb-e-commerce-goods/src/app/routes/api/routes.e.commerce.taxes.php
+//honeycomb-e-commerce-goods/src/app/routes/admin/routes.e.commerce.deposits.php
+
+
+Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth']], function ()
+{
+    Route::get('e-commerce/deposits', ['as' => 'admin.e.commerce.deposits.index', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@adminIndex']);
+
+    Route::group(['prefix' => 'api/e-commerce/deposits'], function ()
+    {
+        Route::get('/', ['as' => 'admin.api.e.commerce.deposits', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@apiIndexPaginate']);
+        Route::post('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create'], 'uses' => 'ecommerce\\HCECDepositsController@apiStore']);
+        Route::delete('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiDestroy']);
+
+        Route::get('list', ['as' => 'admin.api.e.commerce.deposits.list', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@apiIndex']);
+        Route::post('restore', ['as' => 'admin.api.e.commerce.deposits.restore', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiRestore']);
+        Route::post('merge', ['as' => 'api.v1.e.commerce.deposits.merge', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create', 'acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiMerge']);
+        Route::delete('force', ['as' => 'admin.api.e.commerce.deposits.force', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiForceDelete']);
+
+        Route::group(['prefix' => '{id}'], function ()
+        {
+            Route::get('/', ['as' => 'admin.api.e.commerce.deposits.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@apiShow']);
+            Route::put('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiUpdate']);
+            Route::delete('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiDestroy']);
+
+            Route::put('strict', ['as' => 'admin.api.e.commerce.deposits.update.strict', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiUpdateStrict']);
+            Route::post('duplicate', ['as' => 'admin.api.e.commerce.deposits.duplicate.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list', 'acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create'], 'uses' => 'ecommerce\\HCECDepositsController@apiDuplicate']);
+            Route::delete('force', ['as' => 'admin.api.e.commerce.deposits.force.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiForceDelete']);
+        });
+    });
+});
+
+
+//honeycomb-e-commerce-goods/src/app/routes/api/00_routes.e.commerce.taxes.php
 
 
 Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
@@ -62,6 +94,40 @@ Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
             Route::put('strict', ['as' => 'api.v1.e.commerce.taxes.update.strict', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_update'], 'uses' => 'ecommerce\\HCECTaxesController@apiUpdateStrict']);
             Route::post('duplicate', ['as' => 'api.v1.e.commerce.taxes.duplicate.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list', 'acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_create'], 'uses' => 'ecommerce\\HCECTaxesController@apiDuplicate']);
             Route::delete('force', ['as' => 'api.v1.e.commerce.taxes.force.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_force_delete'], 'uses' => 'ecommerce\\HCECTaxesController@apiForceDelete']);
+        });
+    });
+});
+
+//honeycomb-e-commerce-goods/src/app/routes/api/routes.e.commerce.deposits.php
+
+
+Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
+{
+    Route::group(['prefix' => 'v1/e-commerce/deposits'], function ()
+    {
+        Route::get('/', ['as' => 'api.v1.e.commerce.deposits', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@apiIndexPaginate']);
+        Route::post('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create'], 'uses' => 'ecommerce\\HCECDepositsController@apiStore']);
+        Route::delete('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiDestroy']);
+
+        Route::group(['prefix' => 'list'], function ()
+        {
+            Route::get('/', ['as' => 'api.v1.e.commerce.deposits.list', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@apiList']);
+            Route::get('{timestamp}', ['as' => 'api.v1.e.commerce.deposits.list.update', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@apiIndexSync']);
+        });
+
+        Route::post('restore', ['as' => 'api.v1.e.commerce.deposits.restore', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiRestore']);
+        Route::post('merge', ['as' => 'api.v1.e.commerce.deposits.merge', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create', 'acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiMerge']);
+        Route::delete('force', ['as' => 'api.v1.e.commerce.deposits.force', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiForceDelete']);
+
+        Route::group(['prefix' => '{id}'], function ()
+        {
+            Route::get('/', ['as' => 'api.v1.e.commerce.deposits.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list'], 'uses' => 'ecommerce\\HCECDepositsController@apiShow']);
+            Route::put('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiUpdate']);
+            Route::delete('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiDestroy']);
+
+            Route::put('strict', ['as' => 'api.v1.e.commerce.deposits.update.strict', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiUpdateStrict']);
+            Route::post('duplicate', ['as' => 'api.v1.e.commerce.deposits.duplicate.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list', 'acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create'], 'uses' => 'ecommerce\\HCECDepositsController@apiDuplicate']);
+            Route::delete('force', ['as' => 'api.v1.e.commerce.deposits.force.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiForceDelete']);
         });
     });
 });

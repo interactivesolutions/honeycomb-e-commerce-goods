@@ -3,7 +3,8 @@
         "serviceProviderNameSpace": "HCECommerceGoods"
     },
     "formData": {
-        "e-commerce-taxes": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECTaxesForm"
+        "e-commerce-taxes": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECTaxesForm",
+        "e-commerce-deposits": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECDepositsForm"
     },
     "adminMenu": [
         {
@@ -11,6 +12,12 @@
             "translation": "HCECommerceGoods::e_commerce_taxes.page_title",
             "icon": "fa-percent ",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list"
+        },
+        {
+            "route": "admin.e.commerce.deposits.index",
+            "translation": "HCECommerceGoods::e_commerce_deposits.page_title",
+            "icon": "fa-truck",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list"
         }
     ],
     "acl": {
@@ -25,6 +32,17 @@
                     "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_delete",
                     "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_force_delete"
                 ]
+            },
+            {
+                "name": "admin.e.commerce.deposits",
+                "controller": "interactivesolutions\\honeycombecommercegoods\\app\\http\\controllers\\ecommerce\\HCECDepositsController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -32,7 +50,11 @@
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_create",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_update",
-                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_delete"
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_delete",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete"
             ]
         }
     }
