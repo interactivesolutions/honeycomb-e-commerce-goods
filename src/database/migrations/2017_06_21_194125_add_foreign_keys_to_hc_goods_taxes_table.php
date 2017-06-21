@@ -14,7 +14,7 @@ class AddForeignKeysToHcGoodsTaxesTable extends Migration {
 	{
 		Schema::table('hc_goods_taxes', function(Blueprint $table)
 		{
-			$table->foreign('region_country_id', 'fk_hcg_taxes_hc_regions_countries1')->references('id')->on('hc_regions_countries')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('country_id', 'fk_hcg_taxes_hc_regions_countries1')->references('id')->on('hc_regions_countries')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 

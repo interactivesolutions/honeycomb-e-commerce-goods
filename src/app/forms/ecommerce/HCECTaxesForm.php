@@ -38,8 +38,8 @@ class HCECTaxesForm
                     "requiredVisible" => 1,
                 ], [
                     "type"            => "dropDownList",
-                    "fieldID"         => "region_country_id",
-                    "label"           => trans ("HCECommerceGoods::e_commerce_taxes.region_country_id"),
+                    "fieldID"         => "country_id",
+                    "label"           => trans ("HCECommerceGoods::e_commerce_taxes.country_id"),
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "options"         => HCCountries::select ('id', 'translation_key')->get (),

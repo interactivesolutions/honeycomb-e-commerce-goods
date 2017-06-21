@@ -57,9 +57,9 @@ class HCECTaxesController extends HCBaseController
                 "type"  => "text",
                 "label" => trans ('HCECommerceGoods::e_commerce_taxes.value'),
             ],
-            'region_country_id'               => [
+            'country_id'               => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_taxes.region_country_id'),
+                "label" => trans ('HCECommerceGoods::e_commerce_taxes.country_id'),
             ],
             'translations.{lang}.label'       => [
                 "type"  => "text",
@@ -112,7 +112,7 @@ class HCECTaxesController extends HCBaseController
             array_set ($data, 'record.id', array_get ($_data, 'id'));
 
         array_set ($data, 'record.value', array_get ($_data, 'value'));
-        array_set ($data, 'record.region_country_id', array_get ($_data, 'region_country_id'));
+        array_set ($data, 'record.country_id', array_get ($_data, 'country_id'));
 
         $translations = array_get ($_data, 'translations');
 
@@ -249,7 +249,7 @@ class HCECTaxesController extends HCBaseController
 
         $query->where (function (Builder $query) use ($phrase) {
             $query->where ('value', 'LIKE', '%' . $phrase . '%')
-                  ->orWhere ('region_country_id', 'LIKE', '%' . $phrase . '%');
+                  ->orWhere ('country_id', 'LIKE', '%' . $phrase . '%');
         });
 
         return $query->join ($t, "$r.id", "=", "$t.record_id")

@@ -19,7 +19,7 @@ class CreateHcGoodsTaxesTable extends Migration {
 			$table->timestamps();
 			$table->softDeletes();
 			$table->float('value', 10, 0);
-			$table->string('region_country_id', 36)->index('fk_hcg_taxes_hc_regions_countries1_idx');
+			$table->string('country_id', 36)->index('fk_hcg_taxes_hc_regions_countries1_idx');
 		});
 	}
 

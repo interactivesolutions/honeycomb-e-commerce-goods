@@ -13,7 +13,7 @@ class HCECTaxesValidator extends HCCoreFormValidator
     {
         return [
             'value'             => 'required',
-            'region_country_id' => 'required',
+            'country_id' => 'required',
 
         ];
     }
