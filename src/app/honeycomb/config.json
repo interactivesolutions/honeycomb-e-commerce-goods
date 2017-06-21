@@ -1,21 +1,39 @@
 {
-    "general":
-    {
+    "general": {
         "serviceProviderNameSpace": "HCECommerceGoods"
     },
-    "formData":
-    [
+    "formData": {
+        "e-commerce-taxes": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECTaxesForm"
+    },
+    "adminMenu": [
+        {
+            "route": "admin.e.commerce.taxes.index",
+            "translation": "HCECommerceGoods::e_commerce_taxes.page_title",
+            "icon": "fa-percent ",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list"
+        }
     ],
-    "adminMenu":
-    [
-    ],
-    "acl":
-    {
-        "permissions" :
-        [
+    "acl": {
+        "permissions": [
+            {
+                "name": "admin.e.commerce.taxes",
+                "controller": "interactivesolutions\\honeycombecommercegoods\\app\\http\\controllers\\ecommerce\\HCECTaxesController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_create",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_update",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_delete",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_force_delete"
+                ]
+            }
         ],
-        "rolesActions" :
-        [
-        ]
+        "rolesActions": {
+            "project-admin": [
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_create",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_update",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_delete"
+            ]
+        }
     }
 }
