@@ -15,7 +15,8 @@ class CreateHcGoodsTaxesTranslationsTable extends Migration {
 		Schema::create('hc_goods_taxes_translations', function(Blueprint $table)
 		{
 			$table->integer('count', true);
-			$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamps();
+            $table->softDeletes();
 			$table->string('record_id', 36)->index('fk_hcg_taxes_translations_hcg_taxes1_idx');
 			$table->string('language_code', 2)->index('fk_hcg_types_attributes_translations_hc_languages1_idx');
 			$table->text('description', 65535)->nullable();
