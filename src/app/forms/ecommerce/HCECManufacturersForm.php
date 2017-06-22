@@ -94,8 +94,7 @@ class HCECManufacturersForm
              "fieldID"         => "slug",
              "tabID"           => trans('HCTranslations::core.general'),
              "label"           => trans ("HCECommerceGoods::e_commerce_manufacturers.slug"),
-             "required"        => 1,
-             "requiredVisible" => 1,
+             "readonly"        => 1,
          ];
 
         return $form;
