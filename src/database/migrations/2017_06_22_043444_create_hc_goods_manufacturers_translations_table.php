@@ -15,6 +15,7 @@ class CreateHcGoodsManufacturersTranslationsTable extends Migration {
 		Schema::create('hc_goods_manufacturers_translations', function(Blueprint $table)
 		{
 			$table->integer('count', true);
+            $table->string('id', 36)->unique('id_UNIQUE');
             $table->timestamps();
             $table->softDeletes();
 			$table->string('record_id', 36)->index('fk_hcg_manufacturers_translations_hcg_manufacture_idx');

@@ -15,6 +15,7 @@ class CreateHcGoodsDepositsTranslationsTable extends Migration {
 		Schema::create('hc_goods_deposits_translations', function(Blueprint $table)
 		{
 			$table->integer('count', true);
+            $table->string('id', 36)->unique('id_UNIQUE');
             $table->timestamps();
             $table->softDeletes();
 			$table->string('record_id', 36)->index('fk_hcg_deposits_translations_hcg_deposits1_idx');
