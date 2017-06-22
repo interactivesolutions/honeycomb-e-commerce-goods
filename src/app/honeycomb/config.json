@@ -4,7 +4,8 @@
     },
     "formData": {
         "e-commerce-taxes": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECTaxesForm",
-        "e-commerce-deposits": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECDepositsForm"
+        "e-commerce-deposits": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECDepositsForm",
+        "e-commerce-manufacturers": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECManufacturersForm"
     },
     "adminMenu": [
         {
@@ -18,6 +19,12 @@
             "translation": "HCECommerceGoods::e_commerce_deposits.page_title",
             "icon": "fa-truck",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list"
+        },
+        {
+            "route": "admin.e.commerce.manufacturers.index",
+            "translation": "HCECommerceGoods::e_commerce_manufacturers.page_title",
+            "icon": "fa-industry",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list"
         }
     ],
     "acl": {
@@ -43,6 +50,17 @@
                     "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete",
                     "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete"
                 ]
+            },
+            {
+                "name": "admin.e.commerce.manufacturers",
+                "controller": "interactivesolutions\\honeycombecommercegoods\\app\\http\\controllers\\ecommerce\\HCECManufacturersController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -54,7 +72,11 @@
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update",
-                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete"
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_delete",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete"
             ]
         }
     }

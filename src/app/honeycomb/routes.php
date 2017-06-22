@@ -32,7 +32,7 @@ Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth'
 });
 
 
-//honeycomb-e-commerce-goods/src/app/routes/admin/routes.e.commerce.deposits.php
+//honeycomb-e-commerce-goods/src/app/routes/admin/01_routes.e.commerce.deposits.php
 
 
 Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth']], function ()
@@ -59,6 +59,38 @@ Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth'
             Route::put('strict', ['as' => 'admin.api.e.commerce.deposits.update.strict', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiUpdateStrict']);
             Route::post('duplicate', ['as' => 'admin.api.e.commerce.deposits.duplicate.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list', 'acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create'], 'uses' => 'ecommerce\\HCECDepositsController@apiDuplicate']);
             Route::delete('force', ['as' => 'admin.api.e.commerce.deposits.force.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiForceDelete']);
+        });
+    });
+});
+
+
+//honeycomb-e-commerce-goods/src/app/routes/admin/routes.e.commerce.manufacturers.php
+
+
+Route::group(['prefix' => config('hc.admin_url'), 'middleware' => ['web', 'auth']], function ()
+{
+    Route::get('e-commerce/manufacturers', ['as' => 'admin.e.commerce.manufacturers.index', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@adminIndex']);
+
+    Route::group(['prefix' => 'api/e-commerce/manufacturers'], function ()
+    {
+        Route::get('/', ['as' => 'admin.api.e.commerce.manufacturers', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@apiIndexPaginate']);
+        Route::post('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create'], 'uses' => 'ecommerce\\HCECManufacturersController@apiStore']);
+        Route::delete('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiDestroy']);
+
+        Route::get('list', ['as' => 'admin.api.e.commerce.manufacturers.list', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@apiIndex']);
+        Route::post('restore', ['as' => 'admin.api.e.commerce.manufacturers.restore', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update'], 'uses' => 'ecommerce\\HCECManufacturersController@apiRestore']);
+        Route::post('merge', ['as' => 'api.v1.e.commerce.manufacturers.merge', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create', 'acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiMerge']);
+        Route::delete('force', ['as' => 'admin.api.e.commerce.manufacturers.force', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_force_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiForceDelete']);
+
+        Route::group(['prefix' => '{id}'], function ()
+        {
+            Route::get('/', ['as' => 'admin.api.e.commerce.manufacturers.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@apiShow']);
+            Route::put('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update'], 'uses' => 'ecommerce\\HCECManufacturersController@apiUpdate']);
+            Route::delete('/', ['middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiDestroy']);
+
+            Route::put('strict', ['as' => 'admin.api.e.commerce.manufacturers.update.strict', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update'], 'uses' => 'ecommerce\\HCECManufacturersController@apiUpdateStrict']);
+            Route::post('duplicate', ['as' => 'admin.api.e.commerce.manufacturers.duplicate.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list', 'acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create'], 'uses' => 'ecommerce\\HCECManufacturersController@apiDuplicate']);
+            Route::delete('force', ['as' => 'admin.api.e.commerce.manufacturers.force.single', 'middleware' => ['acl:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_force_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiForceDelete']);
         });
     });
 });
@@ -98,7 +130,7 @@ Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
     });
 });
 
-//honeycomb-e-commerce-goods/src/app/routes/api/routes.e.commerce.deposits.php
+//honeycomb-e-commerce-goods/src/app/routes/api/01_routes.e.commerce.deposits.php
 
 
 Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
@@ -128,6 +160,40 @@ Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
             Route::put('strict', ['as' => 'api.v1.e.commerce.deposits.update.strict', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_update'], 'uses' => 'ecommerce\\HCECDepositsController@apiUpdateStrict']);
             Route::post('duplicate', ['as' => 'api.v1.e.commerce.deposits.duplicate.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list', 'acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_create'], 'uses' => 'ecommerce\\HCECDepositsController@apiDuplicate']);
             Route::delete('force', ['as' => 'api.v1.e.commerce.deposits.force.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_force_delete'], 'uses' => 'ecommerce\\HCECDepositsController@apiForceDelete']);
+        });
+    });
+});
+
+//honeycomb-e-commerce-goods/src/app/routes/api/routes.e.commerce.manufacturers.php
+
+
+Route::group(['prefix' => 'api', 'middleware' => ['auth-apps']], function ()
+{
+    Route::group(['prefix' => 'v1/e-commerce/manufacturers'], function ()
+    {
+        Route::get('/', ['as' => 'api.v1.e.commerce.manufacturers', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@apiIndexPaginate']);
+        Route::post('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create'], 'uses' => 'ecommerce\\HCECManufacturersController@apiStore']);
+        Route::delete('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiDestroy']);
+
+        Route::group(['prefix' => 'list'], function ()
+        {
+            Route::get('/', ['as' => 'api.v1.e.commerce.manufacturers.list', 'middleware' => ['acl-apps:api_v1_interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@apiList']);
+            Route::get('{timestamp}', ['as' => 'api.v1.e.commerce.manufacturers.list.update', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@apiIndexSync']);
+        });
+
+        Route::post('restore', ['as' => 'api.v1.e.commerce.manufacturers.restore', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update'], 'uses' => 'ecommerce\\HCECManufacturersController@apiRestore']);
+        Route::post('merge', ['as' => 'api.v1.e.commerce.manufacturers.merge', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create', 'acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiMerge']);
+        Route::delete('force', ['as' => 'api.v1.e.commerce.manufacturers.force', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_force_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiForceDelete']);
+
+        Route::group(['prefix' => '{id}'], function ()
+        {
+            Route::get('/', ['as' => 'api.v1.e.commerce.manufacturers.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list'], 'uses' => 'ecommerce\\HCECManufacturersController@apiShow']);
+            Route::put('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update'], 'uses' => 'ecommerce\\HCECManufacturersController@apiUpdate']);
+            Route::delete('/', ['middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiDestroy']);
+
+            Route::put('strict', ['as' => 'api.v1.e.commerce.manufacturers.update.strict', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_update'], 'uses' => 'ecommerce\\HCECManufacturersController@apiUpdateStrict']);
+            Route::post('duplicate', ['as' => 'api.v1.e.commerce.manufacturers.duplicate.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list', 'acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_create'], 'uses' => 'ecommerce\\HCECManufacturersController@apiDuplicate']);
+            Route::delete('force', ['as' => 'api.v1.e.commerce.manufacturers.force.single', 'middleware' => ['acl-apps:interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_force_delete'], 'uses' => 'ecommerce\\HCECManufacturersController@apiForceDelete']);
         });
     });
 });
