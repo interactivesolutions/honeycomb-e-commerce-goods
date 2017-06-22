@@ -206,6 +206,7 @@ class HCECCategoriesController extends HCBaseController
      */
     protected function __apiDestroy (array $list)
     {
+        HCECCategoriesTranslations::destroy (HCECCategoriesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECCategories::destroy ($list);
     }
 
@@ -217,6 +218,7 @@ class HCECCategoriesController extends HCBaseController
      */
     protected function __apiForceDelete (array $list)
     {
+        HCECCategoriesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECCategories::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
     }
 
@@ -228,6 +230,7 @@ class HCECCategoriesController extends HCBaseController
      */
     protected function __apiRestore (array $list)
     {
+        HCECCategoriesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECCategories::whereIn ('id', $list)->restore ();
     }
 

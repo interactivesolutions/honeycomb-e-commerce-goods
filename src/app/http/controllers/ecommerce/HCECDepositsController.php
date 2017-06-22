@@ -184,6 +184,7 @@ class HCECDepositsController extends HCBaseController
      */
     protected function __apiDestroy (array $list)
     {
+        HCECDepositsTranslations::destroy (HCECDepositsTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECDeposits::destroy ($list);
     }
 
@@ -195,6 +196,7 @@ class HCECDepositsController extends HCBaseController
      */
     protected function __apiForceDelete (array $list)
     {
+        HCECDepositsTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECDeposits::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
     }
 
@@ -206,6 +208,7 @@ class HCECDepositsController extends HCBaseController
      */
     protected function __apiRestore (array $list)
     {
+        HCECDepositsTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECDeposits::whereIn ('id', $list)->restore ();
     }
 

@@ -180,6 +180,7 @@ class HCECTaxesController extends HCBaseController
      */
     protected function __apiDestroy (array $list)
     {
+        HCECTaxesTranslations::destroy (HCECTaxesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECTaxes::destroy ($list);
     }
 
@@ -191,6 +192,7 @@ class HCECTaxesController extends HCBaseController
      */
     protected function __apiForceDelete (array $list)
     {
+        HCECTaxesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECTaxes::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
     }
 
@@ -202,6 +204,7 @@ class HCECTaxesController extends HCBaseController
      */
     protected function __apiRestore (array $list)
     {
+        HCECTaxesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECTaxes::whereIn ('id', $list)->restore ();
     }
 

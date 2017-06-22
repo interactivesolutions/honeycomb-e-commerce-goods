@@ -53,18 +53,18 @@ class HCECManufacturersController extends HCBaseController
     private function getAdminListHeader ()
     {
         return [
-            'logo_id'                             => [
+            'logo_id' => [
                 "type"  => "image",
                 "label" => trans ('HCECommerceGoods::e_commerce_manufacturers.logo_id'),
             ],
-            'name'                                => [
+            'name'    => [
                 "type"  => "text",
                 "label" => trans ('HCECommerceGoods::e_commerce_manufacturers.name'),
             ],
-            'slug'                                => [
+            'slug'    => [
                 "type"  => "text",
                 "label" => trans ('HCECommerceGoods::e_commerce_manufacturers.slug'),
-            ]
+            ],
 
         ];
     }
@@ -113,7 +113,7 @@ class HCECManufacturersController extends HCBaseController
 
         array_set ($data, 'record.logo_id', array_get ($_data, 'logo_id'));
         array_set ($data, 'record.name', array_get ($_data, 'name'));
-        array_set ($data, 'record.slug', generateHCSlug('manufacturers', array_get ($_data, 'name')));
+        array_set ($data, 'record.slug', generateHCSlug ('manufacturers', array_get ($_data, 'name')));
 
         $translations = array_get ($_data, 'translations', []);
 
@@ -181,6 +181,7 @@ class HCECManufacturersController extends HCBaseController
      */
     protected function __apiDestroy (array $list)
     {
+        HCECManufacturersTranslations::destroy (HCECManufacturersTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECManufacturers::destroy ($list);
     }
 
@@ -192,6 +193,7 @@ class HCECManufacturersController extends HCBaseController
      */
     protected function __apiForceDelete (array $list)
     {
+        HCECManufacturersTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECManufacturers::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
     }
 
@@ -203,6 +205,7 @@ class HCECManufacturersController extends HCBaseController
      */
     protected function __apiRestore (array $list)
     {
+        HCECManufacturersTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECManufacturers::whereIn ('id', $list)->restore ();
     }
 
@@ -219,11 +222,11 @@ class HCECManufacturersController extends HCBaseController
         if ($select == null)
             $select = HCECManufacturers::getFillableFields ();
 
-        $list = HCECManufacturers::with ($with)->select ($select)
-            // add filters
+        $list = HCECManufacturers::with ($with)
+                                 ->select ($select)
                                  ->where (function ($query) use ($select) {
-                $query = $this->getRequestParameters ($query, $select);
-            });
+                                     $query = $this->getRequestParameters ($query, $select);
+                                 });
 
         // enabling check for deleted
         $list = $this->checkForDeleted ($list);
