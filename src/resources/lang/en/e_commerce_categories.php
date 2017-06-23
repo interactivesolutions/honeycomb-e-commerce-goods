@@ -9,5 +9,6 @@ return [
     'seo_title'       => 'Seo title',
     'seo_description' => 'Seo description',
     'seo_keywords'    => 'Seo keywords',
+    'has_children'    => 'This category has child category, unable to delete',
 
 ];

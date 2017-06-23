@@ -1,6 +1,7 @@
 <?php namespace interactivesolutions\honeycombecommercegoods\app\http\controllers\ecommerce;
 
 use Illuminate\Database\Eloquent\Builder;
+use interactivesolutions\honeycombcore\errors\facades\HCLog;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECCategories;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECCategoriesTranslations;
@@ -202,10 +203,14 @@ class HCECCategoriesController extends HCBaseController
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiDestroy (array $list)
     {
+        foreach($list as $id)
+            if(HCECCategories::where ('parent_id', $id))
+                return HCLog::error('EC-0001', trans('HCECommerceGoods::e_commerce_categories.has_children'));
+
         HCECCategoriesTranslations::destroy (HCECCategoriesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECCategories::destroy ($list);
     }
