@@ -115,7 +115,7 @@ class HCECDepositsController extends HCBaseController
         if (array_has ($_data, 'id'))
             array_set ($data, 'record.id', array_get ($_data, 'id'));
 
-        array_set ($data, 'record.value', array_get ($_data, 'value'));
+        array_set ($data, 'record.value', str_replace(",", ".", (array_get ($_data, 'value'))));
         array_set ($data, 'record.country_id', array_get ($_data, 'country_id'));
 
         $translations = array_get ($_data, 'translations');
