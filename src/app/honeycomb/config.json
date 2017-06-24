@@ -6,7 +6,8 @@
         "e-commerce-taxes": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECTaxesForm",
         "e-commerce-deposits": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECDepositsForm",
         "e-commerce-manufacturers": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECManufacturersForm",
-        "e-commerce-categories": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECCategoriesForm"
+        "e-commerce-categories": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECCategoriesForm",
+        "e-commerce-goods-types": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\goods\\HCECTypesForm"
     },
     "adminMenu": [
         {
@@ -14,28 +15,40 @@
             "translation": "HCECommerceGoods::e_commerce_taxes.page_title",
             "icon": "fa-percent",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list",
-            "parent":"admin.e.commerce"
+            "parent": "admin.e.commerce",
+            "priority": 10
         },
         {
             "route": "admin.e.commerce.deposits.index",
             "translation": "HCECommerceGoods::e_commerce_deposits.page_title",
             "icon": "fa-truck",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list",
-            "parent":"admin.e.commerce"
+            "parent": "admin.e.commerce",
+            "priority": 10
         },
         {
             "route": "admin.e.commerce.manufacturers.index",
             "translation": "HCECommerceGoods::e_commerce_manufacturers.page_title",
             "icon": "fa-industry",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list",
-            "parent":"admin.e.commerce"
+            "parent": "admin.e.commerce",
+            "priority": 10
         },
         {
             "route": "admin.e.commerce.categories.index",
             "translation": "HCECommerceGoods::e_commerce_categories.page_title",
             "icon": "fa-th-list",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_list",
-            "parent":"admin.e.commerce"
+            "parent": "admin.e.commerce",
+            "priority": 10
+        },
+        {
+            "route": "admin.e.commerce.goods.types.index",
+            "translation": "HCECommerceGoods::e_commerce_goods_types.page_title",
+            "icon": "fa-th-large",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_list",
+            "parent": "admin.e.commerce",
+            "priority": 10
         }
     ],
     "acl": {
@@ -83,6 +96,17 @@
                     "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_delete",
                     "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_force_delete"
                 ]
+            },
+            {
+                "name": "admin.e.commerce.goods.types",
+                "controller": "interactivesolutions\\honeycombecommercegoods\\app\\http\\controllers\\ecommerce\\goods\\HCECTypesController",
+                "actions": [
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_list",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_create",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_update",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_delete",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_force_delete"
+                ]
             }
         ],
         "rolesActions": {
@@ -102,7 +126,11 @@
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_list",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_create",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_update",
-                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_delete"
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_delete",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_list",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_create",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_update",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_delete"
             ]
         }
     }

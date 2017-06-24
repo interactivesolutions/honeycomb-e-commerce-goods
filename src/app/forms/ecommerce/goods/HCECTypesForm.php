@@ -1,0 +1,81 @@
+<?php
+
+namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce\goods;
+
+class HCECTypesForm
+{
+    // name of the form
+    protected $formID = 'e-commerce-goods-types';
+
+    // is form multi language
+    protected $multiLanguage = 1;
+
+    /**
+     * Creating form
+     *
+     * @param bool $edit
+     * @return array
+     */
+    public function createForm (bool $edit = false)
+    {
+        $form = [
+            'storageURL' => route ('admin.api.e.commerce.goods.types'),
+            'buttons'    => [
+                [
+                    "class" => "col-centered",
+                    "label" => trans ('HCTranslations::core.buttons.submit'),
+                    "type"  => "submit",
+                ],
+            ],
+            'structure'  => [
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "translations.label",
+                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.label"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "multiLanguage"   => 1,
+                ], [
+                    "type"            => "textArea",
+                    "fieldID"         => "translations.description",
+                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.description"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "multiLanguage"   => 1,
+                ], [
+                    "type"            => "singleLine",
+                    "fieldID"         => "translations.seo_title",
+                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_title"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "multiLanguage"   => 1,
+                ], [
+                    "type"            => "singleLine",
+                    "fieldID"         => "translations.seo_description",
+                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_description"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "multiLanguage"   => 1,
+                ], [
+                    "type"            => "singleLine",
+                    "fieldID"         => "translations.seo_keywords",
+                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_keywords"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "multiLanguage"   => 1,
+                ],
+            ],
+        ];
+
+        if ($this->multiLanguage)
+            $form['availableLanguages'] = getHCContentLanguages ();
+
+        if (!$edit)
+            return $form;
+
+        //Make changes to edit form if needed
+        // $form['structure'][] = [];
+
+        return $form;
+    }
+}
