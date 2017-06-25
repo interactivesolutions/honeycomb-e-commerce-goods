@@ -31,6 +31,7 @@ class HCECTypesForm
                 [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.label",
+                    "tabID"           => trans('HCTranslations::core.translations'),
                     "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.label"),
                     "required"        => 1,
                     "requiredVisible" => 1,
@@ -38,6 +39,7 @@ class HCECTypesForm
                 ], [
                     "type"            => "textArea",
                     "fieldID"         => "translations.description",
+                    "tabID"           => trans('HCTranslations::core.translations'),
                     "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.description"),
                     "required"        => 0,
                     "requiredVisible" => 0,
@@ -45,6 +47,7 @@ class HCECTypesForm
                 ], [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.seo_title",
+                    "tabID"           => trans('HCTranslations::core.seo'),
                     "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_title"),
                     "required"        => 0,
                     "requiredVisible" => 0,
@@ -52,6 +55,7 @@ class HCECTypesForm
                 ], [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.seo_description",
+                    "tabID"           => trans('HCTranslations::core.seo'),
                     "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_description"),
                     "required"        => 0,
                     "requiredVisible" => 0,
@@ -59,6 +63,7 @@ class HCECTypesForm
                 ], [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.seo_keywords",
+                    "tabID"           => trans('HCTranslations::core.seo'),
                     "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_keywords"),
                     "required"        => 0,
                     "requiredVisible" => 0,
