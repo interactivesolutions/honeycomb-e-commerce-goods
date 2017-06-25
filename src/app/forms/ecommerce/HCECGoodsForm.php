@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce;
 
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECManufacturers;
 use interactivesolutions\honeycombgalleries\app\models\Galleries;
 use interactivesolutions\honeycombregions\app\models\regions\HCCountries;
 
@@ -136,12 +137,18 @@ class HCECGoodsForm
                         "showNodes"              => ["value", "translations.{lang}.title"],
                     ],
                 ], [
-                    "type"            => "singleLine",
+                    "type"            => "dropDownList",
                     "fieldID"         => "manufacturer_id",
                     "tabID"           => trans ('HCTranslations::core.general'),
                     "label"           => trans ("HCECommerceGoods::e_commerce_goods.manufacturer_id"),
                     "required"        => 0,
                     "requiredVisible" => 0,
+                    "options"         => HCECManufacturers::get(),
+                    "search"          => [
+                        "maximumSelectionLength" => 1,
+                        "minimumSelectionLength" => 1,
+                        "showNodes"              => ["name"],
+                    ],
                 ], [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.short_description",
