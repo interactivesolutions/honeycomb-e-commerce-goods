@@ -21,7 +21,7 @@ class HCECAttributesForm
     public function createForm (bool $edit = false)
     {
         $form = [
-            'storageURL' => route ('admin.api.06_routes.e.commerce.goods.types.attributes'),
+            'storageURL' => route ('admin.api.e.commerce.goods.types.attributes'),
             'buttons'    => [
                 [
                     "class" => "col-centered",

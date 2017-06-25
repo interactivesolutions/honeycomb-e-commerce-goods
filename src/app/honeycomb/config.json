@@ -52,10 +52,10 @@
             "priority": 10
         },
         {
-            "route": "admin.06_routes.e.commerce.goods.types.attributes.index",
+            "route": "admin.e.commerce.goods.types.attributes.index",
             "translation": "HCECommerceGoods::e_commerce_goods_types_attributes.page_title",
             "icon": "fa-th-list",
-            "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_list",
+            "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_list",
             "priority": 10,
             "parent": "admin.e.commerce.goods.types.index"
         }
@@ -118,14 +118,14 @@
                 ]
             },
             {
-                "name": "admin.06_routes.e.commerce.goods.types.attributes",
+                "name": "admin.e.commerce.goods.types.attributes",
                 "controller": "interactivesolutions\\honeycombecommercegoods\\app\\http\\controllers\\ecommerce\\goods\\types\\HCECAttributesController",
                 "actions": [
-                    "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_list",
-                    "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_create",
-                    "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_update",
-                    "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_delete",
-                    "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_force_delete"
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_list",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_create",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_update",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_delete",
+                    "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_force_delete"
                 ]
             }
         ],
@@ -151,10 +151,10 @@
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_create",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_update",
                 "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_delete",
-                "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_list",
-                "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_create",
-                "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_update",
-                "interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_delete"
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_list",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_create",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_update",
+                "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_delete"
             ]
         }
     }

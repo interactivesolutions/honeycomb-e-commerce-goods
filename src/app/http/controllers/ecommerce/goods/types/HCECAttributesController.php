@@ -21,22 +21,22 @@ class HCECAttributesController extends HCBaseController
     {
         $config = [
             'title'       => trans ('HCECommerceGoods::e_commerce_goods_types_attributes.page_title'),
-            'listURL'     => route ('admin.api.06_routes.e.commerce.goods.types.attributes'),
+            'listURL'     => route ('admin.api.e.commerce.goods.types.attributes'),
             'newFormUrl'  => route ('admin.api.form-manager', ['e-commerce-goods-types-attributes-new']),
             'editFormUrl' => route ('admin.api.form-manager', ['e-commerce-goods-types-attributes-edit']),
             'imagesUrl'   => route ('resource.get', ['/']),
             'headers'     => $this->getAdminListHeader (),
         ];
 
-        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_create'))
+        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_create'))
             $config['actions'][] = 'new';
 
-        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_update')) {
+        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_06_routes_e_commerce_goods_types_attributes_delete'))
+        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_attributes_delete'))
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
