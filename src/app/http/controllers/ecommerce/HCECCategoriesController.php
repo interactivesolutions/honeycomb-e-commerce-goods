@@ -213,30 +213,36 @@ class HCECCategoriesController extends HCBaseController
 
         HCECCategoriesTranslations::destroy (HCECCategoriesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECCategories::destroy ($list);
+
+        return hcSuccess();
     }
 
     /**
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiForceDelete (array $list)
     {
         HCECCategoriesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECCategories::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
+
+        return hcSuccess();
     }
 
     /**
      * Restore multiple records
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiRestore (array $list)
     {
         HCECCategoriesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECCategories::whereIn ('id', $list)->restore ();
+
+        return hcSuccess();
     }
 
     /**

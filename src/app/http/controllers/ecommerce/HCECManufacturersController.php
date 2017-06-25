@@ -177,36 +177,42 @@ class HCECManufacturersController extends HCBaseController
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiDestroy (array $list)
     {
         HCECManufacturersTranslations::destroy (HCECManufacturersTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECManufacturers::destroy ($list);
+
+        return hcSuccess();
     }
 
     /**
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiForceDelete (array $list)
     {
         HCECManufacturersTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECManufacturers::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
+
+        return hcSuccess();
     }
 
     /**
      * Restore multiple records
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiRestore (array $list)
     {
         HCECManufacturersTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECManufacturers::whereIn ('id', $list)->restore ();
+
+        return hcSuccess();
     }
 
     /**

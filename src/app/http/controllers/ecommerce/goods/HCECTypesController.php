@@ -190,36 +190,42 @@ class HCECTypesController extends HCBaseController
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiDestroy (array $list)
     {
         HCECTypesTranslations::destroy (HCECTypesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECTypes::destroy ($list);
+
+        return hcSuccess();
     }
 
     /**
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiForceDelete (array $list)
     {
         HCECTypesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECTypes::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
+
+        return hcSuccess();
     }
 
     /**
      * Restore multiple records
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiRestore (array $list)
     {
         HCECTypesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECTypes::whereIn ('id', $list)->restore ();
+
+        return hcSuccess();
     }
 
     /**

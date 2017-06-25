@@ -215,36 +215,42 @@ class HCECAttributesController extends HCBaseController
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiDestroy (array $list)
     {
         HCECAttributesTranslations::destroy (HCECAttributesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
         HCECAttributes::destroy ($list);
+
+        return hcSuccess();
     }
 
     /**
      * Delete records table
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiForceDelete (array $list)
     {
         HCECAttributesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
         HCECAttributes::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
+
+        return hcSuccess();
     }
 
     /**
      * Restore multiple records
      *
      * @param $list
-     * @return mixed|void
+     * @return mixed
      */
     protected function __apiRestore (array $list)
     {
         HCECAttributesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
         HCECAttributes::whereIn ('id', $list)->restore ();
+
+        return hcSuccess();
     }
 
     /**
