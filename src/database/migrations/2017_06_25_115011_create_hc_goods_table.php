@@ -21,7 +21,7 @@ class CreateHcGoodsTable extends Migration {
 			$table->string('type_id', 36)->index('fk_hcg_hcg_types1_idx');
 			$table->boolean('virtual')->nullable();
 			$table->string('reference')->nullable();
-			$table->integer('ean_13')->nullable();
+			$table->bigInteger('ean_13')->nullable();
 			$table->float('price', 10, 0);
 			$table->string('tax_id', 36)->index('fk_hcg_hcg_taxes1_idx');
 			$table->float('price_before_tax', 10, 0);
