@@ -64,14 +64,6 @@ class HCECValuesForm
                     ],
                 ], [
                     "type"            => "singleLine",
-                    "fieldID"         => "translations.description",
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes_values.description"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                    "tabID"           => trans ('HCTranslations::core.translations'),
-                    "multiLanguage"   => 1,
-                ], [
-                    "type"            => "singleLine",
                     "fieldID"         => "translations.label",
                     "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes_values.label"),
                     "required"        => 1,
@@ -80,10 +72,10 @@ class HCECValuesForm
                     "multiLanguage"   => 1,
                 ], [
                     "type"            => "singleLine",
-                    "fieldID"         => "translations.slug",
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes_values.slug"),
-                    "required"        => 1,
-                    "requiredVisible" => 1,
+                    "fieldID"         => "translations.description",
+                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes_values.description"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
                     "tabID"           => trans ('HCTranslations::core.translations'),
                     "multiLanguage"   => 1,
                 ], [
