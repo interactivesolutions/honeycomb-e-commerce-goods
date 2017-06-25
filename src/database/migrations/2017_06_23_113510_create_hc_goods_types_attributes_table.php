@@ -18,6 +18,7 @@ class CreateHcGoodsTypesAttributesTable extends Migration {
 			$table->string('id', 36)->unique('id_UNIQUE');
 			$table->timestamps();
 			$table->softDeletes();
+			$table->string('type_id', 36)->index('fk_hcg_types_attributes_hcg_types_idx');
 			$table->boolean('dynamic')->nullable();
 			$table->integer('min_select')->nullable();
 			$table->integer('max_select')->nullable();
