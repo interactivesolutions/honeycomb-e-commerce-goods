@@ -18,6 +18,7 @@ class CreateHcGoodsTypesAttributesValuesTable extends Migration {
 			$table->string('id', 36)->unique('id_UNIQUE');
 			$table->timestamps();
 			$table->softDeletes();
+            $table->string('attribute_id', 36)->index('fk_hcg_types_attributes_values_hcg_ta_idx');
 		});
 	}
 
