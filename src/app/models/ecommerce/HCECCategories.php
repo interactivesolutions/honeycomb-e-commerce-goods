@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce;
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\rules\HCECPriceRulesAffectedItems;
 
 class HCECCategories extends HCMultiLanguageModel
 {
@@ -20,4 +21,11 @@ class HCECCategories extends HCMultiLanguageModel
      */
     protected $fillable = ['id', 'resource_id', 'parent_id'];
 
+    /**
+     * Get all of the rules for the category.
+     */
+    public function rules()
+    {
+        return $this->morphMany(HCECPriceRulesAffectedItems::class, 'rulable');
+    }
 }
