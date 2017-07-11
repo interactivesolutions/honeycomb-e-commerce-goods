@@ -52,8 +52,8 @@ class HCECAttributesForm
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "options"         => [
-                        ['id' => '1', 'label' => trans ('HCTranslations::core.checkbox.yes')],
-                        ['id' => '0', 'label' => trans ('HCTranslations::core.checkbox.no')],
+                        ['id' => '1', 'label' => trans ('HCTranslations::core.yes')],
+                        ['id' => '0', 'label' => trans ('HCTranslations::core.no')],
                     ],
                     "value"           => "1",
                 ],
@@ -65,8 +65,8 @@ class HCECAttributesForm
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "options"         => [
-                        ['id' => '1', 'label' => trans ('HCTranslations::core.checkbox.yes')],
-                        ['id' => '0', 'label' => trans ('HCTranslations::core.checkbox.no')],
+                        ['id' => '1', 'label' => trans ('HCTranslations::core.yes')],
+                        ['id' => '0', 'label' => trans ('HCTranslations::core.no')],
                     ],
                     "value"           => "0",
                     "dependencies"    =>
