@@ -5,6 +5,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\good
 use interactivesolutions\honeycombcore\models\HCUuidModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types\attributes\HCECValues;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
+use interactivesolutions\honeycombresources\app\models\HCResources;
 
 class HCECCombinations extends HCUuidModel
 {
@@ -42,4 +43,23 @@ class HCECCombinations extends HCUuidModel
         return $this->belongsToMany(HCECValues::class, 'hc_goods_combinations_attributes', 'goods_combination_id', 'attribute_value_id');
     }
 
+    /**
+     * Relation to goods combination images
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function images()
+    {
+        return $this->belongsToMany(HCResources::class, 'hc_goods_combinations_images', 'goods_combination_id', 'image_id')->withPivot('position')->withTimestamps();
+    }
+
+    /**
+     * Update images
+     *
+     * @param array $images
+     */
+    public function updateImages(array $images)
+    {
+        $this->images()->sync($images);
+    }
 }
