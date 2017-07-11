@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoodsTranslations;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECTaxes;
 use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\HCECGoodsTranslationsValidator;
 use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\HCECGoodsValidator;
 
@@ -90,43 +91,14 @@ class HCECGoodsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.country_id'),
             ],
-            'gallery_id'                            => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.gallery_id'),
-            ],
             'manufacturer_id'                       => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.manufacturer_id'),
-            ],
-            'translations.{lang}.short_description' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.short_description'),
-            ],
-            'translations.{lang}.long_description'  => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.long_description'),
             ],
             'translations.{lang}.label'             => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.label'),
             ],
-            'translations.{lang}.slug'              => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.slug'),
-            ],
-            'translations.{lang}.seo_title'         => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.seo_title'),
-            ],
-            'translations.{lang}.seo_description'   => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.seo_description'),
-            ],
-            'translations.{lang}.seo_keywords'      => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.seo_keywords'),
-            ],
-
         ];
     }
 
@@ -177,13 +149,23 @@ class HCECGoodsController extends HCBaseController
         array_set($data, 'record.virtual', array_get($_data, 'virtual'));
         array_set($data, 'record.reference', array_get($_data, 'reference'));
         array_set($data, 'record.ean_13', array_get($_data, 'ean_13'));
-        array_set($data, 'record.price', array_get($_data, 'price'));
-        array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
-        array_set($data, 'record.price_before_tax', array_get($_data, 'price_before_tax'));
         array_set($data, 'record.deposit_id', array_get($_data, 'deposit_id'));
         array_set($data, 'record.country_id', array_get($_data, 'country_id'));
         array_set($data, 'record.gallery_id', array_get($_data, 'gallery_id'));
         array_set($data, 'record.manufacturer_id', array_get($_data, 'manufacturer_id'));
+
+        $price = floatval(array_get($_data, 'price'));
+        $priceBeforeTax = floatval(array_get($_data, 'price_before_tax'));
+        $tax = HCECTaxes::find(array_get($_data, 'tax_id'))->value;
+
+        if (isset($price) && $price > 0)
+            $priceBeforeTax = $price / (1 + $tax * 0.01);
+        else if (isset($priceBeforeTax) && $priceBeforeTax > 0)
+            $price = $priceBeforeTax * (1 + $tax * 0.01);
+
+        array_set($data, 'record.price', $price);
+        array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
+        array_set($data, 'record.price_before_tax', $priceBeforeTax);
 
         $translations = array_get($_data, 'translations');
 

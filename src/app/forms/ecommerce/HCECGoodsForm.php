@@ -189,15 +189,6 @@ class HCECGoodsForm
                 ],
                 [
                     "type"            => "singleLine",
-                    "fieldID"         => "translations.slug",
-                    "label"           => trans("HCECommerceGoods::e_commerce_goods.slug"),
-                    "required"        => 1,
-                    "requiredVisible" => 1,
-                    "tabID"           => trans('HCTranslations::core.translations'),
-                    "multiLanguage"   => 1,
-                ],
-                [
-                    "type"            => "singleLine",
                     "fieldID"         => "translations.seo_title",
                     "label"           => trans("HCECommerceGoods::e_commerce_goods.seo_title"),
                     "required"        => 0,
@@ -233,7 +224,16 @@ class HCECGoodsForm
             return $form;
 
         //Make changes to edit form if needed
-        // $form['structure'][] = [];
+        $form['structure'][] =
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "translations.slug",
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.slug"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "tabID"           => trans('HCTranslations::core.translations'),
+                    "multiLanguage"   => 1,
+                ];
 
         return $form;
     }

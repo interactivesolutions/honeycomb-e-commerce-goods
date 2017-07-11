@@ -13,9 +13,8 @@ class HCECGoodsValidator extends HCCoreFormValidator
     {
         return [
             'type_id'          => 'required',
-            'price'            => 'required',
-            'tax_id'           => 'required',
-            'price_before_tax' => 'required',
+            'price'            => 'required_without:price_before_tax',
+            'price_before_tax' => 'required_without:price',
 
         ];
     }
