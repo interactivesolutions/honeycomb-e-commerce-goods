@@ -18,7 +18,7 @@
             "translation": "HCECommerceGoods::e_commerce_taxes.page_title",
             "icon": "fa-percent",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_taxes_list",
-            "parent": "admin.e.commerce",
+            "parent": "admin.routes.e.commerce.goods.index",
             "priority": 10
         },
         {
@@ -26,7 +26,7 @@
             "translation": "HCECommerceGoods::e_commerce_deposits.page_title",
             "icon": "fa-truck",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_deposits_list",
-            "parent": "admin.e.commerce",
+            "parent": "admin.routes.e.commerce.goods.index",
             "priority": 10
         },
         {
@@ -34,7 +34,7 @@
             "translation": "HCECommerceGoods::e_commerce_manufacturers.page_title",
             "icon": "fa-industry",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_manufacturers_list",
-            "parent": "admin.e.commerce",
+            "parent": "admin.routes.e.commerce.goods.index",
             "priority": 10
         },
         {
@@ -42,16 +42,16 @@
             "translation": "HCECommerceGoods::e_commerce_categories.page_title",
             "icon": "fa-th-list",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_categories_list",
-            "parent": "admin.e.commerce",
-            "priority": 10
+            "parent": "admin.routes.e.commerce.goods.index",
+            "priority": 20
         },
         {
             "route": "admin.e.commerce.goods.types.index",
             "translation": "HCECommerceGoods::e_commerce_goods_types.page_title",
             "icon": "fa-th-large",
             "aclPermission": "interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_types_list",
-            "parent": "admin.e.commerce",
-            "priority": 10
+            "parent": "admin.routes.e.commerce.goods.index",
+            "priority": 30
         },
         {
             "route": "admin.e.commerce.goods.types.attributes.index",
