@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce;
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\combinations\HCECCombinations;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\rules\HCECPriceRulesAffectedItems;
 
 class HCECGoods extends HCMultiLanguageModel
@@ -23,6 +24,8 @@ class HCECGoods extends HCMultiLanguageModel
 
     /**
      * Get all of the rules for the good.
+     *
+     * @return mixed
      */
     public function rules()
     {
@@ -31,9 +34,21 @@ class HCECGoods extends HCMultiLanguageModel
 
     /**
      * Get all of the categories for the good.
+     *
+     * @return mixed
      */
     public function categories()
     {
         return $this->morphMany(HCECPriceRulesAffectedItems::class, 'rulable')->with('rule');
+    }
+
+    /**
+     * Has many combinations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function combinations()
+    {
+        return $this->hasMany(HCECCombinations::class, 'goods_id');
     }
 }

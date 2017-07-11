@@ -24,6 +24,7 @@ class HCECGoodsController extends HCBaseController
             'listURL'     => route ('admin.api.routes.e.commerce.goods'),
             'newFormUrl'  => route ('admin.api.form-manager', ['e-commerce-goods-new']),
             'editFormUrl' => route ('admin.api.form-manager', ['e-commerce-goods-edit']),
+            'newRecordUrl' => 1,
             'imagesUrl'   => route ('resource.get', ['/']),
             'headers'     => $this->getAdminListHeader (),
         ];

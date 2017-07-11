@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types\attributes;
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types\HCECAttributes;
 
 class HCECValues extends HCMultiLanguageModel
 {
@@ -20,4 +21,13 @@ class HCECValues extends HCMultiLanguageModel
      */
     protected $fillable = ['id', 'attribute_id'];
 
+    /**
+     * Belongs to attribute
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function attribute()
+    {
+        return $this->belongsTo(HCECAttributes::class, 'attribute_id');
+    }
 }
