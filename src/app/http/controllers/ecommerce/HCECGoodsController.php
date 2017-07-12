@@ -219,7 +219,7 @@ class HCECGoodsController extends HCBaseController
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
 
-        return $this->apiShow($record->id);
+        return hcSuccess(trans('HCTranslations::core.updated'));
     }
 
     /**
