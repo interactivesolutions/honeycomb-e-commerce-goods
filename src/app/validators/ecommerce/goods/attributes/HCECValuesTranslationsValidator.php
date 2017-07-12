@@ -1,4 +1,6 @@
-<?php namespace interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\types\attributes;
+<?php
+
+namespace interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\attributes;
 
 use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
 

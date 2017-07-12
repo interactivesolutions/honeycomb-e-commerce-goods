@@ -1,8 +1,10 @@
-<?php namespace interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\types\attributes;
+<?php
+
+namespace interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods;
 
 use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
 
-class HCECValuesValidator extends HCCoreFormValidator
+class HCECAttributesValidator extends HCCoreFormValidator
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,8 +14,6 @@ class HCECValuesValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            'attribute_id' => 'required',
-
         ];
     }
 }

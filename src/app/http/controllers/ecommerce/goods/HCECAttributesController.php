@@ -1,17 +1,16 @@
-<?php namespace interactivesolutions\honeycombecommercegoods\app\http\controllers\ecommerce\goods\types\attributes;
+<?php
+
+namespace interactivesolutions\honeycombecommercegoods\app\http\controllers\ecommerce\goods;
 
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
-use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types\attributes\HCECValues;
-use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types\attributes\HCECValuesTranslations;
-use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\types\attributes\HCECValuesTranslationsValidator;
-use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\types\attributes\HCECValuesValidator;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributesTranslations;
+use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\HCECAttributesTranslationsValidator;
+use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\HCECAttributesValidator;
 
-class HCECValuesController extends HCBaseController
+class HCECAttributesController extends HCBaseController
 {
-
-    //TODO recordsPerPage setting
-
     /**
      * Returning configured admin view
      *
@@ -20,23 +19,23 @@ class HCECValuesController extends HCBaseController
     public function adminIndex ()
     {
         $config = [
-            'title'       => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.page_title'),
-            'listURL'     => route ('admin.api.routes.e.commerce.goods.types.attributes.values'),
-            'newFormUrl'  => route ('admin.api.form-manager', ['e-commerce-goods-types-attributes-values-new']),
-            'editFormUrl' => route ('admin.api.form-manager', ['e-commerce-goods-types-attributes-values-edit']),
+            'title'       => trans ('HCECommerceGoods::e_commerce_goods_attributes.page_title'),
+            'listURL'     => route ('admin.api.e.commerce.goods.attributes'),
+            'newFormUrl'  => route ('admin.api.form-manager', ['e-commerce-goods-attributes-new']),
+            'editFormUrl' => route ('admin.api.form-manager', ['e-commerce-goods-attributes-edit']),
             'imagesUrl'   => route ('resource.get', ['/']),
             'headers'     => $this->getAdminListHeader (),
         ];
 
-        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_routes_e_commerce_goods_types_attributes_values_create'))
+        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_attributes_create'))
             $config['actions'][] = 'new';
 
-        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_routes_e_commerce_goods_types_attributes_values_update')) {
+        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_attributes_update')) {
             $config['actions'][] = 'update';
             $config['actions'][] = 'restore';
         }
 
-        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_routes_e_commerce_goods_types_attributes_values_delete'))
+        if (auth ()->user ()->can ('interactivesolutions_honeycomb_e_commerce_goods_e_commerce_goods_attributes_delete'))
             $config['actions'][] = 'delete';
 
         $config['actions'][] = 'search';
@@ -53,33 +52,37 @@ class HCECValuesController extends HCBaseController
     private function getAdminListHeader ()
     {
         return [
-            'attribute_id'                        => [
+            'dynamic'                             => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.attribute_id'),
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.dynamic'),
+            ],
+            'multilanguage'                       => [
+                "type"  => "text",
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.multilanguage'),
             ],
             'translations.{lang}.description'     => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.description'),
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.description'),
             ],
             'translations.{lang}.label'           => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.label'),
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.label'),
             ],
             'translations.{lang}.slug'            => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.slug'),
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.slug'),
             ],
             'translations.{lang}.seo_title'       => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.seo_title'),
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.seo_title'),
             ],
             'translations.{lang}.seo_description' => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.seo_description'),
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.seo_description'),
             ],
             'translations.{lang}.seo_keywords'    => [
                 "type"  => "text",
-                "label" => trans ('HCECommerceGoods::e_commerce_goods_types_attributes_values.seo_keywords'),
+                "label" => trans ('HCECommerceGoods::e_commerce_goods_attributes.seo_keywords'),
             ],
 
         ];
@@ -106,8 +109,9 @@ class HCECValuesController extends HCBaseController
     {
         $data = $this->getInputData ();
 
-        $record = HCECValues::create (array_get ($data, 'record', []));
+        $record = HCECAttributes::create (array_get ($data, 'record', []));
         $record->updateTranslations (array_get ($data, 'translations', []));
+        $record->updateTypes(array_get($data, 'types', []));
 
         return $this->apiShow ($record->id);
     }
@@ -119,21 +123,25 @@ class HCECValuesController extends HCBaseController
      */
     protected function getInputData ()
     {
-        (new HCECValuesValidator())->validateForm ();
-        (new HCECValuesTranslationsValidator())->validateForm ();
+        (new HCECAttributesValidator())->validateForm ();
+        (new HCECAttributesTranslationsValidator())->validateForm ();
 
         $_data = request ()->all ();
 
         if (array_has ($_data, 'id'))
             array_set ($data, 'record.id', array_get ($_data, 'id'));
 
-        array_set ($data, 'record.attribute_id', array_get ($_data, 'attribute_id'));
+        array_set ($data, 'record.dynamic', array_get ($_data, 'dynamic'));
+        array_set ($data, 'record.min_select', array_get ($_data, 'min_select'));
+        array_set ($data, 'record.max_select', array_get ($_data, 'max_select'));
+        array_set ($data, 'record.multilanguage', array_get ($_data, 'multilanguage'));
+        array_set ($data, 'types', array_get ($_data, 'types'));
 
         $translations = array_get ($_data, 'translations');
 
         foreach ($translations as &$value)
             if (!isset($value['slug']) || $value['slug'] == "")
-                $value['slug'] = generateHCSlug ("e-commerce/goods/types/attributes/values", $value['label']);
+                $value['slug'] = generateHCSlug ("e-commerce/goods/attributes", $value['label']);
 
         array_set ($data, 'translations', $translations);
 
@@ -148,14 +156,14 @@ class HCECValuesController extends HCBaseController
      */
     public function apiShow (string $id)
     {
-        $with = ['translations'];
+        $with = ['translations', 'types'];
 
-        $select = HCECValues::getFillableFields (true);
+        $select = HCECAttributes::getFillableFields (true);
 
-        $record = HCECValues::with ($with)
-                            ->select ($select)
-                            ->where ('id', $id)
-                            ->firstOrFail ();
+        $record = HCECAttributes::with ($with)
+                                ->select ($select)
+                                ->where ('id', $id)
+                                ->firstOrFail ();
 
         return $record;
     }
@@ -168,12 +176,13 @@ class HCECValuesController extends HCBaseController
      */
     protected function __apiUpdate (string $id)
     {
-        $record = HCECValues::findOrFail ($id);
+        $record = HCECAttributes::findOrFail ($id);
 
         $data = $this->getInputData ();
 
         $record->update (array_get ($data, 'record', []));
         $record->updateTranslations (array_get ($data, 'translations', []));
+        $record->updateTypes(array_get($data, 'types', []));
 
         return $this->apiShow ($record->id);
     }
@@ -186,7 +195,7 @@ class HCECValuesController extends HCBaseController
      */
     protected function __apiUpdateStrict (string $id)
     {
-        HCECValues::where ('id', $id)->update (request ()->all ());
+        HCECAttributes::where ('id', $id)->update (request ()->all ());
 
         return $this->apiShow ($id);
     }
@@ -199,10 +208,10 @@ class HCECValuesController extends HCBaseController
      */
     protected function __apiDestroy (array $list)
     {
-        HCECValuesTranslations::destroy (HCECValuesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
-        HCECValues::destroy ($list);
+        HCECAttributesTranslations::destroy (HCECAttributesTranslations::whereIn ('record_id', $list)->pluck ('id')->toArray ());
+        HCECAttributes::destroy ($list);
 
-        return hcSuccess ();
+        return hcSuccess();
     }
 
     /**
@@ -213,10 +222,10 @@ class HCECValuesController extends HCBaseController
      */
     protected function __apiForceDelete (array $list)
     {
-        HCECValuesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
-        HCECValues::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
+        HCECAttributesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->forceDelete ();
+        HCECAttributes::onlyTrashed ()->whereIn ('id', $list)->forceDelete ();
 
-        return hcSuccess ();
+        return hcSuccess();
     }
 
     /**
@@ -227,10 +236,10 @@ class HCECValuesController extends HCBaseController
      */
     protected function __apiRestore (array $list)
     {
-        HCECValuesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
-        HCECValues::whereIn ('id', $list)->restore ();
+        HCECAttributesTranslations::onlyTrashed ()->whereIn ('record_id', $list)->restore ();
+        HCECAttributes::whereIn ('id', $list)->restore ();
 
-        return hcSuccess ();
+        return hcSuccess();
     }
 
     /**
@@ -244,13 +253,13 @@ class HCECValuesController extends HCBaseController
         $with = ['translations'];
 
         if ($select == null)
-            $select = HCECValues::getFillableFields ();
+            $select = HCECAttributes::getFillableFields ();
 
-        $list = HCECValues::with ($with)
-                          ->select ($select)
-                          ->where (function ($query) use ($select) {
-                              $query = $this->getRequestParameters ($query, $select);
-                          });
+        $list = HCECAttributes::with ($with)
+                              ->select ($select)
+                              ->where (function ($query) use ($select) {
+                                  $query = $this->getRequestParameters ($query, $select);
+                              });
 
         // enabling check for deleted
         $list = $this->checkForDeleted ($list);
@@ -272,11 +281,14 @@ class HCECValuesController extends HCBaseController
      */
     protected function searchQuery (Builder $query, string $phrase)
     {
-        $r = HCECValues::getTableName ();
-        $t = HCECValuesTranslations::getTableName ();
+        $r = HCECAttributes::getTableName ();
+        $t = HCECAttributesTranslations::getTableName ();
 
         $query->where (function (Builder $query) use ($phrase) {
-            $query->where ('attribute_id', 'LIKE', '%' . $phrase . '%');
+            $query->where ('dynamic', 'LIKE', '%' . $phrase . '%')
+                  ->orWhere ('min_select', 'LIKE', '%' . $phrase . '%')
+                  ->orWhere ('max_select', 'LIKE', '%' . $phrase . '%')
+                  ->orWhere ('multilanguage', 'LIKE', '%' . $phrase . '%');
         });
 
         return $query->join ($t, "$r.id", "=", "$t.record_id")

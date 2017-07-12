@@ -23,7 +23,7 @@ class CreateHcGoodsCombinationsAttributesTable extends Migration
             $table->unique(['goods_combination_id', 'attribute_value_id'], 'combination_attribute_value_unique');
 
             $table->foreign('goods_combination_id')->references('id')->on('hc_goods_combinations')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign('attribute_value_id')->references('id')->on('hc_goods_types_attributes_values')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('attribute_value_id')->references('id')->on('hc_goods_attributes_values')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 

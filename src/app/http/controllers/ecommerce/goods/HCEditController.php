@@ -4,7 +4,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\http\controllers\ecom
 
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\combinations\HCECCombinations;
-use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types\HCECAttributes;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 
 class HCEditController extends HCBaseController
@@ -49,7 +49,9 @@ class HCEditController extends HCBaseController
                 }]);
             }])
             ->select(HCECAttributes::getFillableFields())
-            ->where('type_id', $typeId)
+            ->whereHas('types', function ($query) use ($typeId) {
+                $query->where('type_id', $typeId);
+            })
             ->notDynamic()
             ->get();
 
@@ -94,18 +96,18 @@ class HCEditController extends HCBaseController
     {
         $combinations = HCECCombinations::with(['attribute_values' => function ($query) {
 
-            $query->join('hc_goods_types_attributes_values_translations', function ($join) {
-                $join->on('hc_goods_types_attributes_values_translations.record_id', '=', 'hc_goods_types_attributes_values.id')
-                    ->whereNull('hc_goods_types_attributes_values_translations.deleted_at');
-            })->select('hc_goods_types_attributes_values_translations.label', 'hc_goods_types_attributes_values.id', 'hc_goods_types_attributes_values.attribute_id')
+            $query->join('hc_goods_attributes_values_translations', function ($join) {
+                $join->on('hc_goods_attributes_values_translations.record_id', '=', 'hc_goods_attributes_values.id')
+                    ->whereNull('hc_goods_attributes_values_translations.deleted_at');
+            })->select('hc_goods_attributes_values_translations.label', 'hc_goods_attributes_values.id', 'hc_goods_attributes_values.attribute_id')
                 ->whereHas('attribute', function ($query) {
                     $query->where('dynamic', 0);
                 })
                 ->with(['attribute' => function ($query) {
-                    $query->join('hc_goods_types_attributes_translations', function ($join) {
-                        $join->on('hc_goods_types_attributes_translations.record_id', '=', 'hc_goods_types_attributes.id')
-                            ->whereNull('hc_goods_types_attributes_translations.deleted_at');
-                    })->select('hc_goods_types_attributes_translations.label', 'hc_goods_types_attributes.id');
+                    $query->join('hc_goods_attributes_translations', function ($join) {
+                        $join->on('hc_goods_attributes_translations.record_id', '=', 'hc_goods_attributes.id')
+                            ->whereNull('hc_goods_attributes_translations.deleted_at');
+                    })->select('hc_goods_attributes_translations.label', 'hc_goods_attributes.id');
                 }]);
         }])
             ->where('goods_id', $goodsId)

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateHcGoodsTypesAttributesTable extends Migration {
+class CreateHcGoodsAttributesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreateHcGoodsTypesAttributesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('hc_goods_types_attributes', function(Blueprint $table)
+		Schema::create('hc_goods_attributes', function(Blueprint $table)
 		{
 			$table->integer('count', true);
 			$table->string('id', 36)->unique('id_UNIQUE');
 			$table->timestamps();
 			$table->softDeletes();
-			$table->string('type_id', 36)->index('fk_hcg_types_attributes_hcg_types_idx');
 			$table->boolean('dynamic')->nullable();
 			$table->integer('min_select')->nullable();
 			$table->integer('max_select')->nullable();
@@ -34,7 +33,7 @@ class CreateHcGoodsTypesAttributesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('hc_goods_types_attributes');
+		Schema::drop('hc_goods_attributes');
 	}
 
 }

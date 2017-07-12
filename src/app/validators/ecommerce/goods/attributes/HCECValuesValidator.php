@@ -1,8 +1,10 @@
-<?php namespace interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\types;
+<?php
+
+namespace interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\attributes;
 
 use interactivesolutions\honeycombcore\http\controllers\HCCoreFormValidator;
 
-class HCECAttributesTranslationsValidator extends HCCoreFormValidator
+class HCECValuesValidator extends HCCoreFormValidator
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,7 +14,7 @@ class HCECAttributesTranslationsValidator extends HCCoreFormValidator
     protected function rules()
     {
         return [
-            'translations.*.label' => 'required',
+            'attribute_id' => 'required',
 
         ];
     }

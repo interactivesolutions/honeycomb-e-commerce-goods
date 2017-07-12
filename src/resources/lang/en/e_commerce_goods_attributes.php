@@ -5,7 +5,7 @@ return [
     'min_select'      => 'Min select',
     'max_select'      => 'Max select',
     'multilanguage'   => 'Multi language',
-    'type_id'         => 'Type',
+    'types'           => 'Types',
     'description'     => 'Description',
     'label'           => 'Label',
     'slug'            => 'Slug',

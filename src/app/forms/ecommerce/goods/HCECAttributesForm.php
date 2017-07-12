@@ -1,13 +1,13 @@
 <?php
 
-namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce\goods\types;
+namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce\goods;
 
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
 
 class HCECAttributesForm
 {
     // name of the form
-    protected $formID = 'e-commerce-goods-types-attributes';
+    protected $formID = 'e-commerce-goods-attributes';
 
     // is form multi language
     protected $multiLanguage = 1;
@@ -18,28 +18,28 @@ class HCECAttributesForm
      * @param bool $edit
      * @return array
      */
-    public function createForm (bool $edit = false)
+    public function createForm(bool $edit = false)
     {
         $form = [
-            'storageURL' => route ('admin.api.e.commerce.goods.types.attributes'),
+            'storageURL' => route('admin.api.e.commerce.goods.attributes'),
             'buttons'    => [
                 [
                     "class" => "col-centered",
-                    "label" => trans ('HCTranslations::core.buttons.submit'),
+                    "label" => trans('HCTranslations::core.buttons.submit'),
                     "type"  => "submit",
                 ],
             ],
             'structure'  => [
                 [
                     "type"            => "dropDownList",
-                    "fieldID"         => "type_id",
+                    "fieldID"         => "types",
                     "tabID"           => trans('HCTranslations::core.general'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.type_id"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.types"),
                     "required"        => 1,
                     "requiredVisible" => 1,
-                    "options"         => HCECTypes::with ('translations')->get (),
+                    "options"         => HCECTypes::with('translations')->get(),
                     "search"          => [
-                        "maximumSelectionLength" => 1,
+                        "maximumSelectionLength" => 10,
                         "minimumSelectionLength" => 1,
                         "showNodes"              => ["translations.{lang}.label"],
                     ],
@@ -48,12 +48,12 @@ class HCECAttributesForm
                     "type"            => 'dropDownList',
                     "fieldID"         => 'dynamic',
                     "tabID"           => trans('HCTranslations::core.general'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.dynamic"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.dynamic"),
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "options"         => [
-                        ['id' => '1', 'label' => trans ('HCTranslations::core.yes')],
-                        ['id' => '0', 'label' => trans ('HCTranslations::core.no')],
+                        ['id' => '1', 'label' => trans('HCTranslations::core.yes')],
+                        ['id' => '0', 'label' => trans('HCTranslations::core.no')],
                     ],
                     "value"           => "1",
                 ],
@@ -61,12 +61,12 @@ class HCECAttributesForm
                     "type"            => 'dropDownList',
                     "fieldID"         => 'multilanguage',
                     "tabID"           => trans('HCTranslations::core.general'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.multilanguage"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.multilanguage"),
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "options"         => [
-                        ['id' => '1', 'label' => trans ('HCTranslations::core.yes')],
-                        ['id' => '0', 'label' => trans ('HCTranslations::core.no')],
+                        ['id' => '1', 'label' => trans('HCTranslations::core.yes')],
+                        ['id' => '0', 'label' => trans('HCTranslations::core.no')],
                     ],
                     "value"           => "0",
                     "dependencies"    =>
@@ -81,7 +81,7 @@ class HCECAttributesForm
                     "type"            => "singleLine",
                     "fieldID"         => "min_select",
                     "tabID"           => trans('HCTranslations::core.general'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.min_select"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.min_select"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "dependencies"    =>
@@ -95,7 +95,7 @@ class HCECAttributesForm
                     "type"            => "singleLine",
                     "fieldID"         => "max_select",
                     "tabID"           => trans('HCTranslations::core.general'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.max_select"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.max_select"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "dependencies"    => [
@@ -108,7 +108,7 @@ class HCECAttributesForm
                     "type"            => "singleLine",
                     "fieldID"         => "translations.label",
                     "tabID"           => trans('HCTranslations::core.translations'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.label"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.label"),
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "multiLanguage"   => 1,
@@ -117,7 +117,7 @@ class HCECAttributesForm
                     "type"            => "singleLine",
                     "fieldID"         => "translations.description",
                     "tabID"           => trans('HCTranslations::core.translations'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.description"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.description"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "multiLanguage"   => 1,
@@ -125,7 +125,7 @@ class HCECAttributesForm
                     "type"            => "singleLine",
                     "fieldID"         => "translations.seo_title",
                     "tabID"           => trans('HCTranslations::core.seo'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.seo_title"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.seo_title"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "multiLanguage"   => 1,
@@ -133,7 +133,7 @@ class HCECAttributesForm
                     "type"            => "singleLine",
                     "fieldID"         => "translations.seo_description",
                     "tabID"           => trans('HCTranslations::core.seo'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.seo_description"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.seo_description"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "multiLanguage"   => 1,
@@ -141,7 +141,7 @@ class HCECAttributesForm
                     "type"            => "singleLine",
                     "fieldID"         => "translations.seo_keywords",
                     "tabID"           => trans('HCTranslations::core.seo'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types_attributes.seo_keywords"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.seo_keywords"),
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "multiLanguage"   => 1,
@@ -149,10 +149,10 @@ class HCECAttributesForm
             ],
         ];
 
-        if ($this->multiLanguage)
-            $form['availableLanguages'] = getHCContentLanguages ();
+        if( $this->multiLanguage )
+            $form['availableLanguages'] = getHCContentLanguages();
 
-        if (!$edit)
+        if( ! $edit )
             return $form;
 
         //Make changes to edit form if needed

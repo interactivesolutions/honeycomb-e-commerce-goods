@@ -3,7 +3,7 @@
 namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\combinations;
 
 use interactivesolutions\honeycombcore\models\HCUuidModel;
-use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types\attributes\HCECValues;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\attributes\HCECValues;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 use interactivesolutions\honeycombresources\app\models\HCResources;
 

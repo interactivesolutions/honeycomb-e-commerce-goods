@@ -1,6 +1,6 @@
 <?php
 
-namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\types;
+namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods;
 
 use interactivesolutions\honeycombcore\models\HCUuidModel;
 
@@ -11,7 +11,7 @@ class HCECAttributesTranslations extends HCUuidModel
      *
      * @var string
      */
-    protected $table = 'hc_goods_types_attributes_translations';
+    protected $table = 'hc_goods_attributes_translations';
 
     /**
      * The attributes that are mass assignable.
