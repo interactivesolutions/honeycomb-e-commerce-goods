@@ -30,4 +30,15 @@ class HCECAttributes extends HCMultiLanguageModel
     {
         return $this->hasMany(HCECValues::class, 'attribute_id');
     }
+
+    /**
+     * Not dynamic scope
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeNotDynamic($query)
+    {
+        return $query->where('dynamic', 0);
+    }
 }

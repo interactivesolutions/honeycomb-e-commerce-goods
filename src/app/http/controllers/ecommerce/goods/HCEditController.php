@@ -39,15 +39,18 @@ class HCEditController extends HCBaseController
      */
     private function getAttributes($typeId)
     {
-        $attributes = HCECAttributes::with(['translations' => function ($query) {
-            $query->select(['id', 'record_id', 'language_code', 'description', 'label', 'slug']);
-        }, 'values'                                        => function ($query) {
-            $query->with(['translations' => function ($query) {
+        $attributes = HCECAttributes::with([
+            'translations' => function ($query) {
                 $query->select(['id', 'record_id', 'language_code', 'description', 'label', 'slug']);
-            }]);
-        }])
+            },
+            'values'       => function ($query) {
+                $query->with(['translations' => function ($query) {
+                    $query->select(['id', 'record_id', 'language_code', 'description', 'label', 'slug']);
+                }]);
+            }])
             ->select(HCECAttributes::getFillableFields())
             ->where('type_id', $typeId)
+            ->notDynamic()
             ->get();
 
         return $attributes;
@@ -90,10 +93,14 @@ class HCEditController extends HCBaseController
     private function getCombinations($goodsId)
     {
         $combinations = HCECCombinations::with(['attribute_values' => function ($query) {
+
             $query->join('hc_goods_types_attributes_values_translations', function ($join) {
                 $join->on('hc_goods_types_attributes_values_translations.record_id', '=', 'hc_goods_types_attributes_values.id')
                     ->whereNull('hc_goods_types_attributes_values_translations.deleted_at');
             })->select('hc_goods_types_attributes_values_translations.label', 'hc_goods_types_attributes_values.id', 'hc_goods_types_attributes_values.attribute_id')
+                ->whereHas('attribute', function ($query) {
+                    $query->where('dynamic', 0);
+                })
                 ->with(['attribute' => function ($query) {
                     $query->join('hc_goods_types_attributes_translations', function ($join) {
                         $join->on('hc_goods_types_attributes_translations.record_id', '=', 'hc_goods_types_attributes.id')
