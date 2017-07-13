@@ -2,6 +2,8 @@
 
 namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce;
 
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributesTranslations;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECManufacturers;
 use interactivesolutions\honeycombgalleries\app\models\Galleries;
@@ -225,16 +227,50 @@ class HCECGoodsForm
 
         //Make changes to edit form if needed
         $form['structure'][] =
-                [
-                    "type"            => "singleLine",
-                    "fieldID"         => "translations.slug",
-                    "label"           => trans("HCECommerceGoods::e_commerce_goods.slug"),
-                    "required"        => 1,
-                    "requiredVisible" => 1,
-                    "tabID"           => trans('HCTranslations::core.translations'),
-                    "multiLanguage"   => 1,
-                ];
+            [
+                "type"            => "singleLine",
+                "fieldID"         => "translations.slug",
+                "label"           => trans("HCECommerceGoods::e_commerce_goods.slug"),
+                "required"        => 1,
+                "requiredVisible" => 1,
+                "tabID"           => trans('HCTranslations::core.translations'),
+                "multiLanguage"   => 1,
+            ];
+
+        $form['structure'] = array_merge($form['structure'], $this->getAttributesForm());
 
         return $form;
+    }
+
+    /**
+     * Get attributes form
+     *
+     * @return array
+     */
+    private function getAttributesForm()
+    {
+        $structure = [];
+
+        $a = HCECAttributes::getTableName();
+        $aT = HCECAttributesTranslations::getTableName();
+
+        $attributes = HCECAttributes::select("$a.id", "$a.multilanguage", "$aT.label")
+            ->join($aT, "$a.id", "=", "$aT.record_id")
+            ->where("$a.dynamic", 1)
+            ->get();
+
+        foreach ( $attributes as $attribute ) {
+            $structure[] = [
+                "type"            => "singleLine",
+                "fieldID"         => "attributes__$attribute->id",
+                "label"           => $attribute->label,
+                "required"        => 0,
+                "requiredVisible" => 0,
+                "tabID"           => trans('HCTranslations::core.attributes'),
+                "multiLanguage"   => $attribute->multilanguage,
+            ];
+        }
+
+        return $structure;
     }
 }

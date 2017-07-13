@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECDynamicAttributes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoodsTranslations;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECTaxes;
@@ -55,47 +57,47 @@ class HCECGoodsController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
-            'type_id'                               => [
+            'type_id'                   => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.type_id'),
             ],
-            'virtual'                               => [
+            'virtual'                   => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.virtual'),
             ],
-            'reference'                             => [
+            'reference'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.reference'),
             ],
-            'ean_13'                                => [
+            'ean_13'                    => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.ean_13'),
             ],
-            'price'                                 => [
+            'price'                     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.price'),
             ],
-            'tax_id'                                => [
+            'tax_id'                    => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.tax_id'),
             ],
-            'price_before_tax'                      => [
+            'price_before_tax'          => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.price_before_tax'),
             ],
-            'deposit_id'                            => [
+            'deposit_id'                => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.deposit_id'),
             ],
-            'country_id'                            => [
+            'country_id'                => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.country_id'),
             ],
-            'manufacturer_id'                       => [
+            'manufacturer_id'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.manufacturer_id'),
             ],
-            'translations.{lang}.label'             => [
+            'translations.{lang}.label' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.label'),
             ],
@@ -158,9 +160,9 @@ class HCECGoodsController extends HCBaseController
         $priceBeforeTax = floatval(array_get($_data, 'price_before_tax'));
         $tax = HCECTaxes::find(array_get($_data, 'tax_id'))->value;
 
-        if (isset($price) && $price > 0)
+        if( isset($price) && $price > 0 )
             $priceBeforeTax = $price / (1 + $tax * 0.01);
-        else if (isset($priceBeforeTax) && $priceBeforeTax > 0)
+        else if( isset($priceBeforeTax) && $priceBeforeTax > 0 )
             $price = $priceBeforeTax * (1 + $tax * 0.01);
 
         array_set($data, 'record.price', $price);
@@ -175,6 +177,7 @@ class HCECGoodsController extends HCBaseController
             }
         }
 
+        array_set($data, 'attributes', $this->getAttributeInputs($translations, $_data));
         array_set($data, 'translations', $translations);
         array_set($data, 'images', array_get($_data, 'images', []));
 
@@ -200,6 +203,33 @@ class HCECGoodsController extends HCBaseController
             ->where('id', $id)
             ->firstOrFail();
 
+        // get attributes
+        // merge attributes to record
+        $dynamic = HCECAttributes::isDynamic()->pluck('multilanguage', 'id');
+
+        foreach ( $dynamic as $attributeId => $isMultiLanguage ) {
+            $goods = HCECDynamicAttributes::where('attribute_id', $attributeId)->where('goods_id', $id)->first();
+
+            if( is_null($goods) ) {
+                continue;
+            }
+
+            if( $isMultiLanguage ) {
+                $goods->load('translations');
+                // merge to translations
+                foreach ( $goods->translations as $translation ) {
+                    foreach ( $record->translations as $key => $trans ) {
+                        if( $trans->language_code == $translation->language_code ) {
+                            $record['translations'][$key]['attributes__' . $attributeId] = $translation->value;
+                        }
+                    }
+                }
+            } else {
+                // merge to object
+                array_set($record, 'attributes__' . $attributeId, $goods->value);
+            }
+        }
+
         return $record;
     }
 
@@ -218,6 +248,33 @@ class HCECGoodsController extends HCBaseController
         $record->update(array_get($data, 'record', []));
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
+
+
+        $translations = array_pull($data, 'attributes.translations');
+
+        foreach ( $translations as $lang => $attributes ) {
+            foreach ( $attributes as $attributeId => $value ) {
+                $dynamicAttribute = HCECDynamicAttributes::firstOrCreate([
+                    'attribute_id' => $attributeId,
+                    'goods_id'     => $id,
+                ]);
+
+                $dynamicAttribute->updateTranslation([
+                    'language_code' => $lang,
+                    'value'         => $value,
+                ]);
+            }
+        }
+
+        foreach ( array_get($data, 'attributes') as $attributeId => $value ) {
+            $dynamicAttribute = HCECDynamicAttributes::firstOrNew([
+                'attribute_id' => $attributeId,
+                'goods_id'     => $id,
+            ]);
+
+            $dynamicAttribute->value = $value;
+            $dynamicAttribute->save();
+        }
 
         return hcSuccess(trans('HCTranslations::core.updated'));
     }
@@ -325,21 +382,37 @@ class HCECGoodsController extends HCBaseController
                 ->orWhere('reference', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('ean_13', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('price', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('tax_id', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('price_before_tax', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('deposit_id', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('country_id', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('gallery_id', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('manufacturer_id', 'LIKE', '%' . $phrase . '%');
+                ->orWhere('country_id', 'LIKE', '%' . $phrase . '%');
         });
 
         return $query->join($t, "$r.id", "=", "$t.record_id")
-            ->where('short_description', 'LIKE', '%' . $phrase . '%')
-            ->orWhere('long_description', 'LIKE', '%' . $phrase . '%')
-            ->orWhere('label', 'LIKE', '%' . $phrase . '%')
-            ->orWhere('slug', 'LIKE', '%' . $phrase . '%')
-            ->orWhere('seo_title', 'LIKE', '%' . $phrase . '%')
-            ->orWhere('seo_description', 'LIKE', '%' . $phrase . '%')
-            ->orWhere('seo_keywords', 'LIKE', '%' . $phrase . '%');
+            ->where('label', 'LIKE', '%' . $phrase . '%');
+    }
+
+    /**
+     * @param $translations
+     * @param $_data
+     * @return array
+     */
+    protected function getAttributeInputs($translations, $_data): array
+    {
+        $attributes = [];
+
+        foreach ( $translations as $key => $translation ) {
+            foreach ( $translation as $field => $value ) {
+                if( str_contains($field, 'attributes__') ) {
+                    $attributes['translations'][$translation['language_code']][str_replace('attributes__', '', $field)] = $value;
+                }
+            }
+        }
+
+        foreach ( $_data as $field => $value ) {
+            if( str_contains($field, 'attributes__') ) {
+                $attributes[str_replace('attributes__', '', $field)] = $value;
+            }
+        }
+
+        return $attributes;
     }
 }

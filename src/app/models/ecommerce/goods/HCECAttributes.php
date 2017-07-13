@@ -60,6 +60,19 @@ class HCECAttributes extends HCMultiLanguageModel
      */
     public function scopeNotDynamic($query)
     {
-        return $query->where('dynamic', 0);
+        return $query->where(function ($query) {
+            $query->where('dynamic', 0)->orWhereNull('dynamic');
+        });
+    }
+
+    /**
+     * Dynamic scope
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeIsDynamic($query)
+    {
+        return $query->where('dynamic', 1);
     }
 }
