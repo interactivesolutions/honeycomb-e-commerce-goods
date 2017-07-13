@@ -2,6 +2,8 @@
 
 namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce\goods;
 
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECCategories;
+
 class HCECTypesForm
 {
     // name of the form
@@ -28,6 +30,20 @@ class HCECTypesForm
                 ],
             ],
             'structure'  => [
+                [
+                    "type"            => "dropDownList",
+                    "fieldID"         => "categories",
+                    "tabID"           => trans('HCTranslations::core.translations'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_categories.page_title"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "options"         => HCECCategories::with('translations')->get(),
+                    "search"          => [
+                        "maximumSelectionLength" => 20,
+                        "minimumSelectionLength" => 0,
+                        "showNodes"              => ["translations.{lang}.label"],
+                    ],
+                ],
                 [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.label",

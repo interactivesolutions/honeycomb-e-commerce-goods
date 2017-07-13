@@ -104,6 +104,7 @@ class HCECTypesController extends HCBaseController
 
         $record = HCECTypes::create (array_get ($data, 'record', []));
         $record->updateTranslations (array_get ($data, 'translations', []));
+        $record->updateCategories(array_get ($data, 'categories', []));
 
         return $this->apiShow ($record->id);
     }
@@ -131,6 +132,7 @@ class HCECTypesController extends HCBaseController
         }
 
         array_set ($data, 'translations', $translations);
+        array_set ($data, 'categories', array_get ($_data, 'categories'));
 
         return makeEmptyNullable ($data);
     }
@@ -143,7 +145,7 @@ class HCECTypesController extends HCBaseController
      */
     public function apiShow (string $id)
     {
-        $with = ['translations'];
+        $with = ['translations', 'categories'];
 
         $select = HCECTypes::getFillableFields (true);
 
@@ -169,6 +171,7 @@ class HCECTypesController extends HCBaseController
 
         $record->update (array_get ($data, 'record', []));
         $record->updateTranslations (array_get ($data, 'translations', []));
+        $record->updateCategories(array_get ($data, 'categories', []));
 
         return $this->apiShow ($record->id);
     }
