@@ -78,6 +78,26 @@ class HCECAttributesForm
                         ],
                 ],
                 [
+                    "type"            => 'dropDownList',
+                    "fieldID"         => 'is_boolean',
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.is_boolean"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "options"         => [
+                        ['id' => '1', 'label' => trans('HCTranslations::core.yes')],
+                        ['id' => '0', 'label' => trans('HCTranslations::core.no')],
+                    ],
+                    "value"           => "0",
+                    "dependencies"    =>
+                        [
+                            [
+                                'field_id'    => 'dynamic',
+                                'field_value' => "1",
+                            ],
+                        ],
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "min_select",
                     "tabID"           => trans('HCTranslations::core.general'),

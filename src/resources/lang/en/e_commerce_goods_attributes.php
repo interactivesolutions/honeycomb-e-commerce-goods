@@ -12,5 +12,10 @@ return [
     'seo_title'       => 'Seo title',
     'seo_description' => 'Seo description',
     'seo_keywords'    => 'Seo keywords',
+    'is_boolean'      => 'Is boolean',
+    'type_id'         => 'Type',
 
+    'errors' => [
+        'boolean_input' => "When boolean is than dynamic must be 'yes' and multilangage must be 'no'",
+    ],
 ];
