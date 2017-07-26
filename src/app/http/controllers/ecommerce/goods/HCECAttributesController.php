@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributesTranslations;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECDynamicAttributes;
 use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\HCECAttributesTranslationsValidator;
 use interactivesolutions\honeycombecommercegoods\app\validators\ecommerce\goods\HCECAttributesValidator;
 
@@ -60,11 +61,15 @@ class HCECAttributesController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.multilanguage'),
             ],
-            'is_boolean'       => [
-                "type"  => "checkbox",
+            'is_boolean'                       => [
+                "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.is_boolean'),
-                "url"   => route('admin.api.e.commerce.goods.attributes.update.strict', 'id')
             ],
+//            'is_boolean'       => [
+//                "type"  => "checkbox",
+//                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.is_boolean'),
+//                "url"   => route('admin.api.e.commerce.goods.attributes.update.strict', 'id')
+//            ],
             'translations.{lang}.description'     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.description'),
@@ -222,6 +227,9 @@ class HCECAttributesController extends HCBaseController
         HCECAttributesTranslations::destroy(HCECAttributesTranslations::whereIn('record_id', $list)->pluck('id')->toArray());
         HCECAttributes::destroy($list);
 
+        // destroy related dynamic attributes
+        HCECDynamicAttributes::whereIn('attribute_id', $list)->delete();
+
         return hcSuccess();
     }
 
@@ -235,6 +243,9 @@ class HCECAttributesController extends HCBaseController
     {
         HCECAttributesTranslations::onlyTrashed()->whereIn('record_id', $list)->forceDelete();
         HCECAttributes::onlyTrashed()->whereIn('id', $list)->forceDelete();
+
+        // force delete related dynamic attributes
+        HCECDynamicAttributes::whereIn('attribute_id', $list)->forceDelete();
 
         return hcSuccess();
     }
@@ -250,6 +261,9 @@ class HCECAttributesController extends HCBaseController
         HCECAttributesTranslations::onlyTrashed()->whereIn('record_id', $list)->restore();
         HCECAttributes::whereIn('id', $list)->restore();
 
+        // restore related dynamic attributes
+        HCECDynamicAttributes::whereIn('attribute_id', $list)->restore();
+        
         return hcSuccess();
     }
 
