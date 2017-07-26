@@ -1,5 +1,6 @@
 <?php namespace interactivesolutions\honeycombecommercegoods\app\http\controllers\ecommerce;
 
+use Doctrine\Common\Annotations\Annotation\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
@@ -249,7 +250,6 @@ class HCECGoodsController extends HCBaseController
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
 
-
         $translations = array_pull($data, 'attributes.translations');
 
         foreach ( $translations as $lang => $attributes ) {
@@ -407,11 +407,31 @@ class HCECGoodsController extends HCBaseController
             }
         }
 
+        $usedAttributes = [];
+
         foreach ( $_data as $field => $value ) {
             if( str_contains($field, 'attributes__') ) {
-                $attributes[str_replace('attributes__', '', $field)] = $value;
+                if( is_array($value) ) {
+                    $attributeId = str_replace('attributes__', '', $field);
+
+                    $usedAttributes[] = $attributeId;
+
+                    $attributes[$attributeId] = array_get($value, 0);
+                } else {
+                    $attributes[str_replace('attributes__', '', $field)] = $value;
+                }
             }
         }
+
+        // get all not selected attributes and set their value to 0
+        $attributeRecords = HCECAttributes::isDynamic()->where('is_boolean', 1)->pluck('id')->all();
+
+        $unusedAttributes = array_diff($attributeRecords, $usedAttributes);
+
+        foreach ( $unusedAttributes as $unusedAttributeId ) {
+            $attributes[$unusedAttributeId] = 0;
+        }
+
 
         return $attributes;
     }
