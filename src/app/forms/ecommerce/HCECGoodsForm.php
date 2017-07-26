@@ -251,24 +251,32 @@ class HCECGoodsForm
     {
         $structure = [];
 
-        $a = HCECAttributes::getTableName();
-        $aT = HCECAttributesTranslations::getTableName();
+        $attributes = HCECAttributes::with('translations')->isDynamic()->get()->map(function ($item, $key) {
 
-        $attributes = HCECAttributes::select("$a.id", "$a.multilanguage", "$aT.label")
-            ->join($aT, "$a.id", "=", "$aT.record_id")
-            ->where("$a.dynamic", 1)
-            ->get();
+            $obj = new \stdClass();
+            $obj->id = $item->id;
+            $obj->multilanguage = $item->multilanguage ?? 0;
+            $obj->is_boolean = $item->is_boolean;
+            $obj->label = get_translation_name('label', app()->getLocale(), $item->translations->toArray());
+
+            return $obj;
+        });
 
         foreach ( $attributes as $attribute ) {
-            $structure[] = [
-                "type"            => "singleLine",
-                "fieldID"         => "attributes__$attribute->id",
-                "label"           => $attribute->label,
-                "required"        => 0,
-                "requiredVisible" => 0,
-                "tabID"           => trans('HCTranslations::core.attributes'),
-                "multiLanguage"   => $attribute->multilanguage,
-            ];
+
+            if( $attribute->is_boolean ) {
+                $structure[] = formManagerYesNo('checkBoxList', "attributes__$attribute->id", " $attribute->label", 0, 0, trans('HCTranslations::core.attributes'), false);
+            } else {
+                $structure[] = [
+                    "type"            => "singleLine",
+                    "fieldID"         => "attributes__$attribute->id",
+                    "label"           => $attribute->label,
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "tabID"           => trans('HCTranslations::core.attributes'),
+                    "multiLanguage"   => $attribute->multilanguage,
+                ];
+            }
         }
 
         return $structure;
