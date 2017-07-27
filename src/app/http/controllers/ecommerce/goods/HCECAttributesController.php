@@ -263,7 +263,7 @@ class HCECAttributesController extends HCBaseController
 
         // restore related dynamic attributes
         HCECDynamicAttributes::whereIn('attribute_id', $list)->restore();
-        
+
         return hcSuccess();
     }
 

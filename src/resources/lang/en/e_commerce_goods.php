@@ -10,7 +10,7 @@ return [
     'price_before_tax'  => 'Price before tax',
     'deposit_id'        => 'Deposit',
     'country_id'        => 'Country',
-    'gallery_id'        => 'Gallery',
+    'images'            => 'Images',
     'manufacturer_id'   => 'Manufacturer',
     'short_description' => 'Short description',
     'long_description'  => 'Long description',
