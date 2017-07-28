@@ -61,7 +61,7 @@ class HCECAttributesController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.multilanguage'),
             ],
-            'is_boolean'                       => [
+            'is_boolean'                          => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.is_boolean'),
             ],
@@ -142,7 +142,7 @@ class HCECAttributesController extends HCBaseController
         if( array_has($_data, 'id') )
             array_set($data, 'record.id', array_get($_data, 'id'));
 
-        if($_data['is_boolean'] == 1 && $_data['dynamic'] == 1 && $_data['multilanguage'] != 0){
+        if( $_data['is_boolean'] == 1 && $_data['dynamic'] == 1 && $_data['multilanguage'] != 0 ) {
             throw new \Exception(trans('HCECommerceGoods::e_commerce_goods_attributes.errors.boolean_input'));
         }
 
@@ -283,7 +283,10 @@ class HCECAttributesController extends HCBaseController
         $list = HCECAttributes::with($with)
             ->select($select)
             ->where(function ($query) use ($select) {
-                $query = $this->getRequestParameters($query, $select);
+                $query = $this->getRequestParameters($query, $select)
+                    ->whereHas('types', function ($query) {
+                        $query->where('type_id', request('type_id'));
+                    });
             });
 
         // enabling check for deleted
