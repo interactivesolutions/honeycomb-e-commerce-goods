@@ -283,10 +283,13 @@ class HCECAttributesController extends HCBaseController
         $list = HCECAttributes::with($with)
             ->select($select)
             ->where(function ($query) use ($select) {
-                $query = $this->getRequestParameters($query, $select)
-                    ->whereHas('types', function ($query) {
+                $query = $this->getRequestParameters($query, $select);
+
+                if( request()->has('type_id') ) {
+                    $query->whereHas('types', function ($query) {
                         $query->where('type_id', request('type_id'));
                     });
+                }
             });
 
         // enabling check for deleted
