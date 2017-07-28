@@ -4,6 +4,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\good
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\attributes\HCECValues;
+use interactivesolutions\honeycombresources\app\models\HCResources;
 
 class HCECAttributes extends HCMultiLanguageModel
 {
@@ -19,7 +20,7 @@ class HCECAttributes extends HCMultiLanguageModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'dynamic', 'min_select', 'max_select', 'multilanguage', 'is_boolean'];
+    protected $fillable = ['id', 'dynamic', 'min_select', 'max_select', 'multilanguage', 'is_boolean', 'resource_id'];
 
     /**
      * Values
@@ -39,6 +40,16 @@ class HCECAttributes extends HCMultiLanguageModel
     public function types()
     {
         return $this->belongsToMany(HCECTypes::class, 'hc_goods_types_attributes', 'attribute_id', 'type_id')->withTimestamps();
+    }
+
+    /**
+     * Resource
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function resource()
+    {
+        return $this->belongsTo(HCResources::class, 'resource_id');
     }
 
     /**

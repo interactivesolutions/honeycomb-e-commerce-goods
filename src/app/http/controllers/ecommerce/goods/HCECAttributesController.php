@@ -53,6 +53,10 @@ class HCECAttributesController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
+            'resource_id'                             => [
+                "type"  => "image",
+                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.resource_id'),
+            ],
             'dynamic'                             => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.dynamic'),
@@ -82,19 +86,6 @@ class HCECAttributesController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.slug'),
             ],
-            'translations.{lang}.seo_title'       => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.seo_title'),
-            ],
-            'translations.{lang}.seo_description' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.seo_description'),
-            ],
-            'translations.{lang}.seo_keywords'    => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.seo_keywords'),
-            ],
-
         ];
     }
 
@@ -151,6 +142,7 @@ class HCECAttributesController extends HCBaseController
         array_set($data, 'record.min_select', array_get($_data, 'min_select'));
         array_set($data, 'record.max_select', array_get($_data, 'max_select'));
         array_set($data, 'record.multilanguage', array_get($_data, 'multilanguage'));
+        array_set($data, 'record.resource_id', array_get($_data, 'resource_id'));
         array_set($data, 'types', array_get($_data, 'types'));
 
         $translations = array_get($_data, 'translations');

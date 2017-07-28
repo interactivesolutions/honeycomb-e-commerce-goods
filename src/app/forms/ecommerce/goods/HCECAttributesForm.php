@@ -45,6 +45,17 @@ class HCECAttributesForm
                     ],
                 ],
                 [
+                    "type"            => "resource",
+                    "fieldID"         => "resource_id",
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.resource_id"),
+                    "uploadURL"       => route("admin.api.resources"),
+                    "viewURL"         => route("resource.get", ['/']),
+                    "fileCount"       => 1,
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
+                [
                     "type"            => 'dropDownList',
                     "fieldID"         => 'dynamic',
                     "tabID"           => trans('HCTranslations::core.general'),

@@ -14,6 +14,7 @@ return [
     'seo_keywords'    => 'Seo keywords',
     'is_boolean'      => 'Is boolean',
     'type_id'         => 'Type',
+    'resource_id'     => 'Resource',
 
     'errors' => [
         'boolean_input' => "When boolean is than dynamic must be 'yes' and multilangage must be 'no'",
