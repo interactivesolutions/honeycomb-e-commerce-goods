@@ -181,7 +181,7 @@ class HCECGoodsForm
                     "multiLanguage"   => 1,
                 ],
                 [
-                    "type"            => "singleLine",
+                    "type"            => "richTextArea",
                     "fieldID"         => "translations.long_description",
                     "label"           => trans("HCECommerceGoods::e_commerce_goods.long_description"),
                     "required"        => 0,

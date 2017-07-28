@@ -170,7 +170,7 @@ class HCECGoodsController extends HCBaseController
         array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
         array_set($data, 'record.price_before_tax', $priceBeforeTax);
 
-        $translations = array_get($_data, 'translations');
+        $translations = array_get($_data, 'translations', []);
 
         foreach ( $translations as &$value ) {
             if( ! isset($value['slug']) || $value['slug'] == "" ) {
@@ -250,7 +250,7 @@ class HCECGoodsController extends HCBaseController
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
 
-        $translations = array_pull($data, 'attributes.translations');
+        $translations = array_pull($data, 'attributes.translations', []);
 
         foreach ( $translations as $lang => $attributes ) {
             foreach ( $attributes as $attributeId => $value ) {
@@ -266,7 +266,7 @@ class HCECGoodsController extends HCBaseController
             }
         }
 
-        foreach ( array_get($data, 'attributes') as $attributeId => $value ) {
+        foreach ( array_get($data, 'attributes', []) as $attributeId => $value ) {
             $dynamicAttribute = HCECDynamicAttributes::firstOrNew([
                 'attribute_id' => $attributeId,
                 'goods_id'     => $id,
