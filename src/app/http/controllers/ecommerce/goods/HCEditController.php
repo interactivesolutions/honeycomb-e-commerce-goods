@@ -72,9 +72,17 @@ class HCEditController extends HCBaseController
             return redirect()->back();
         }
 
-        $combination = HCECCombinations::firstOrCreate([
+        $attributeValueIds = array_values(request()->except('_token'));
+
+        if( $this->combinationExists($attributeValueIds, $goodsId) ) {
+            return redirect()->route('admin.routes.e.commerce.goods.{_id}.index', [$goodsId, '#combinations']);
+        }
+
+        $isDefault = HCECCombinations::where('goods_id', $goodsId)->count() ? "0" : "1";
+
+        $combination = HCECCombinations::create([
             'goods_id'   => $goodsId,
-            'is_default' => 1,
+            'is_default' => $isDefault,
         ]);
 
         $values = $combination->attribute_values()->get();
@@ -130,5 +138,35 @@ class HCEditController extends HCBaseController
         $combination->forceDelete();
 
         return ['success' => true];
+    }
+
+    /**
+     * Check if combination exists
+     *
+     * @param $attributeValueIds
+     * @param $goodsId
+     * @return bool
+     */
+    private function combinationExists($attributeValueIds, $goodsId)
+    {
+        $results = (\DB::select("SELECT
+ 	hgca.attribute_value_id,
+  	hgca.goods_combination_id
+FROM `hc_goods_combinations_attributes` hgca 
+JOIN hc_goods_combinations hgc ON hgc.id = hgca.goods_combination_id and hgc.goods_id = :goods_id
+JOIN hc_goods_attributes_values hgav ON hgav.id = hgca.attribute_value_id
+JOIN hc_goods_attributes ha ON ha.id = hgav .attribute_id
+GROUP BY
+  	hgav.attribute_id,
+    hgca.goods_combination_id,
+    hgca.attribute_value_id", ['goods_id' => $goodsId]));
+
+        foreach ( collect($results)->groupBy('goods_combination_id') as $combination => $items ) {
+            if( $items->pluck('attribute_value_id')->diff($attributeValueIds)->isEmpty() ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

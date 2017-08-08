@@ -125,7 +125,6 @@ class HCECGoodsController extends HCBaseController
     protected function __apiStore()
     {
         $data = $this->getInputData();
-
         $record = HCECGoods::create(array_get($data, 'record', []));
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
@@ -160,7 +159,7 @@ class HCECGoodsController extends HCBaseController
         $price = floatval(array_get($_data, 'price'));
         $priceBeforeTax = floatval(array_get($_data, 'price_before_tax'));
         $tax = HCECTaxes::find(array_get($_data, 'tax_id'))->value;
-
+        
         if( isset($price) && $price > 0 )
             $priceBeforeTax = $price / (1 + $tax * 0.01);
         else if( isset($priceBeforeTax) && $priceBeforeTax > 0 )

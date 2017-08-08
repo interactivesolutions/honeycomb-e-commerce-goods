@@ -40,7 +40,7 @@ class HCECCombinations extends HCUuidModel
      */
     public function attribute_values()
     {
-        return $this->belongsToMany(HCECValues::class, 'hc_goods_combinations_attributes', 'goods_combination_id', 'attribute_value_id');
+        return $this->belongsToMany(HCECValues::class, 'hc_goods_combinations_attributes', 'goods_combination_id', 'attribute_value_id')->withTimestamps();
     }
 
     /**
