@@ -10,7 +10,8 @@
         "e-commerce-goods-types": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\goods\\HCECTypesForm",
         "e-commerce-goods-attributes": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\goods\\HCECAttributesForm",
         "e-commerce-goods-attributes-values": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\goods\\attributes\\HCECValuesForm",
-        "e-commerce-goods": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECGoodsForm"
+        "e-commerce-goods": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\HCECGoodsForm",
+        "e-commerce-goods-combinations": "interactivesolutions\\honeycombecommercegoods\\app\\forms\\ecommerce\\goods\\HCECCombinationsForm"
     },
     "adminMenu": [
         {
