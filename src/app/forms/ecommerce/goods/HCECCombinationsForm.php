@@ -3,6 +3,7 @@
 namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce\goods;
 
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECSpecificPrice;
 
 class HCECCombinationsForm
 {
@@ -93,8 +94,7 @@ class HCECCombinationsForm
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "value"           => 'amount',
-//                    "options"         => OCSpecificPrice::getTableEnumList('reduction_type', 'label', 'HCECommerceGoods::e_commerce_goods_combinations.reductions.'),
-                    "options"         => [],
+                    "options"         => HCECSpecificPrice::getTableEnumList('reduction_type', 'label', 'HCECommerceGoods::e_commerce_goods_combinations.'),
                     "dependencies"    => [
                         [
                             "field_id"    => "price_action",

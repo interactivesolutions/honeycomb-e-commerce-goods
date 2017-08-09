@@ -36,7 +36,7 @@ class HCECCombinationsController extends HCBaseController
         // get prices
         if( array_get($_data, 'price_action') == 'impact' ) {
             $price = array_get($_data, 'price_tax_included');
-            $tax   = HCECTaxes::findOrFail($goods->tax_id);
+            $tax = HCECTaxes::findOrFail($goods->tax_id);
             list($priceTaxExcluded, $taxAmount) = PriceHelper::calcTaxes($price, $tax->value);
 
             // record
@@ -44,8 +44,6 @@ class HCECCombinationsController extends HCBaseController
             array_set($data, 'record.price_tax_excluded', $priceTaxExcluded);
             array_set($data, 'record.price_tax_amount', $taxAmount);
         } else if( array_get($_data, 'price_action') == 'specific' ) {
-
-            dd('Implement price reduction');
             // specific price
             array_set($data, 'specific_price.reduction_type', array_get($_data, 'reduction_type'));
 
@@ -73,9 +71,7 @@ class HCECCombinationsController extends HCBaseController
      */
     public function apiShow(string $goodsId, string $id = null)
     {
-        $with = ['goods.translations'
-//            ,'specific_price'
-            , 'images'];
+        $with = ['goods.translations', 'specific_price', 'images'];
 
         $select = HCECCombinations::getFillableFields(true);
 
@@ -84,13 +80,11 @@ class HCECCombinationsController extends HCBaseController
             ->where('id', $id)
             ->firstOrFail();
 
-//        $record                     = $this->mapPriceObject($record);
-//        $record->price_tax_included = PriceHelper::truncate($record->price_tax_included);
+        $record = $this->mapPriceObject($record);
+        $record->price_tax_included = PriceHelper::truncate($record->price_tax_included);
         $record->combination_images = $record->images->pluck('id');
 
-        array_forget($record, [
-            'specific_price',
-            'image']);
+        array_forget($record, ['specific_price', 'image']);
 
         return $record;
     }
@@ -114,7 +108,7 @@ class HCECCombinationsController extends HCBaseController
             }
 
             $item->date_from = $item->specific_price->date_from;
-            $item->date_to   = $item->specific_price->date_to;
+            $item->date_to = $item->specific_price->date_to;
         }
 
         return $item;
@@ -134,8 +128,7 @@ class HCECCombinationsController extends HCBaseController
 
         $record->update(array_get($data, 'record', []));
         $record->updateImages(array_get($data, 'combination_images'));
-
-//        $record->updateSpecificPrice(array_get($data, 'specific_price', []), array_get($data, 'record.price_action'));
+        $record->updateSpecificPrice(array_get($data, 'specific_price', []), array_get($data, 'record.price_action'));
 
         return $this->apiShow($record->goods_id, $record->id);
     }

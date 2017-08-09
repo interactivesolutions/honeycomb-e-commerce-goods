@@ -5,6 +5,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\good
 use interactivesolutions\honeycombcore\models\HCUuidModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\attributes\HCECValues;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECSpecificPrice;
 use interactivesolutions\honeycombresources\app\models\HCResources;
 
 class HCECCombinations extends HCUuidModel
@@ -54,6 +55,16 @@ class HCECCombinations extends HCUuidModel
     }
 
     /**
+     * Specific price
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function specific_price()
+    {
+        return $this->hasOne(HCECSpecificPrice::class, 'combination_id', 'id');
+    }
+
+    /**
      * Update images
      *
      * @param array $images
@@ -62,4 +73,27 @@ class HCECCombinations extends HCUuidModel
     {
         $this->images()->sync($images);
     }
+
+    /**
+     * Update specific price
+     *
+     * @param array $data
+     * @param $priceAction
+     */
+    public function updateSpecificPrice(array $data, $priceAction)
+    {
+        $specific = $this->specific_price()->first();
+
+        if( $priceAction != 'specific' && ! is_null($specific) ) {
+            $specific->forceDelete();
+        } else if( $priceAction == 'specific' ) {
+
+            if( is_null($specific) ) {
+                $this->specific_price()->create($data);
+            } else {
+                $this->specific_price()->update($data);
+            }
+        }
+    }
+
 }

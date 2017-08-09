@@ -28,7 +28,7 @@ class HCEditController extends HCBaseController
             'combinations' => app(HCECCombinationsController::class)->getCombinations($good->id),
         ];
 
-        return hcview('HCCoreUI::admin.goods.edit', ['config' => $config]);
+        return hcview('HCECommerceGoods::edit', ['config' => $config]);
     }
 
     /**

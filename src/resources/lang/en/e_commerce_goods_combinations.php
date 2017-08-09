@@ -21,6 +21,9 @@ return [
     'date_from'      => 'Date_from',
     'date_to'        => 'Date_to',
 
+    'amount'     => 'Amount',
+    'percentage' => 'Percentage',
+
     'errors' => [
         'boolean_input' => "When boolean is than dynamic must be 'yes' and multilangage must be 'no'",
     ],
