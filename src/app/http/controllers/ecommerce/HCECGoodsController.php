@@ -58,14 +58,18 @@ class HCECGoodsController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
-            'type_id'                   => [
+            'translations.{lang}.label' => [
+                "type"  => "text",
+                "label" => trans('HCECommerceGoods::e_commerce_goods.label'),
+            ],
+            'type.translations.{lang}.label'                   => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.type_id'),
             ],
-            'virtual'                   => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.virtual'),
-            ],
+//            'virtual'                   => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceGoods::e_commerce_goods.virtual'),
+//            ],
             'reference'                 => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.reference'),
@@ -78,7 +82,7 @@ class HCECGoodsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.price'),
             ],
-            'tax_id'                    => [
+            'tax.value'                    => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.tax_id'),
             ],
@@ -94,13 +98,9 @@ class HCECGoodsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.country_id'),
             ],
-            'manufacturer_id'           => [
+            'manufacturer.name'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.manufacturer_id'),
-            ],
-            'translations.{lang}.label' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.label'),
             ],
         ];
     }
@@ -341,7 +341,7 @@ class HCECGoodsController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['translations'];
+        $with = ['translations', 'type.translations', 'manufacturer', 'tax'];
 
         if( $select == null )
             $select = HCECGoods::getFillableFields();

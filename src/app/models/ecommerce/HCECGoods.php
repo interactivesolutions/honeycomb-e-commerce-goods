@@ -4,6 +4,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce;
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\combinations\HCECCombinations;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\rules\HCECPriceRulesAffectedItems;
 use interactivesolutions\honeycombresources\app\models\HCResources;
 
@@ -22,6 +23,36 @@ class HCECGoods extends HCMultiLanguageModel
      * @var array
      */
     protected $fillable = ['id', 'type_id', 'virtual', 'reference', 'ean_13', 'price', 'tax_id', 'price_before_tax', 'deposit_id', 'country_id', 'gallery_id', 'manufacturer_id'];
+
+    /**
+     * Belongs to type
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(HCECTypes::class, 'type_id', 'id');
+    }
+
+    /**
+     * Belongs to tax
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tax()
+    {
+        return $this->belongsTo(HCECTaxes::class, 'tax_id', 'id');
+    }
+
+    /**
+     * Belongs to manufacturer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function manufacturer()
+    {
+        return $this->belongsTo(HCECManufacturers::class, 'manufacturer_id', 'id');
+    }
 
     /**
      * Get all of the rules for the good.
