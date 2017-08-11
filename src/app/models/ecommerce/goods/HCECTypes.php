@@ -4,6 +4,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\good
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECCategories;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 
 class HCECTypes extends HCMultiLanguageModel
 {
