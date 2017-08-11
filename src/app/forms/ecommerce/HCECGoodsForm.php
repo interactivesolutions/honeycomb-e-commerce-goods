@@ -190,6 +190,15 @@ class HCECGoodsForm
                     "multiLanguage"   => 1,
                 ],
                 [
+                    "type"            => "richTextArea",
+                    "fieldID"         => "translations.additional_info",
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.additional_info"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "tabID"           => trans('HCTranslations::core.translations'),
+                    "multiLanguage"   => 1,
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.seo_title",
                     "label"           => trans("HCECommerceGoods::e_commerce_goods.seo_title"),

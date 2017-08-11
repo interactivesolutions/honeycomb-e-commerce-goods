@@ -19,5 +19,5 @@ return [
     'seo_title'         => 'Seo title',
     'seo_description'   => 'Seo description',
     'seo_keywords'      => 'Seo keywords',
-
+    'additional_info'   => 'Additional information',
 ];
