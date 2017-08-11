@@ -52,7 +52,7 @@ class HCECValuesController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
-            'attribute_id'                        => [
+            'attribute.translations.{lang}.label'     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes_values.attribute_id'),
             ],
@@ -240,7 +240,7 @@ class HCECValuesController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['translations'];
+        $with = ['translations', 'attribute.translations'];
 
         if( $select == null )
             $select = HCECValues::getFillableFields();
