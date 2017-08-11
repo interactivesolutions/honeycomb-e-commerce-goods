@@ -172,7 +172,7 @@ class HCECGoodsForm
                     "multiLanguage"   => 1,
                 ],
                 [
-                    "type"            => "singleLine",
+                    "type"            => "textArea",
                     "fieldID"         => "translations.short_description",
                     "label"           => trans("HCECommerceGoods::e_commerce_goods.short_description"),
                     "required"        => 0,
