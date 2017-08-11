@@ -39,4 +39,13 @@ class HCECTypes extends HCMultiLanguageModel
         $this->categories()->sync($categories);
     }
 
+    /**
+     * Relation to goods
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function goods()
+    {
+        return $this->hasMany(HCECGoods::class, 'type_id', 'id');
+    }
 }
