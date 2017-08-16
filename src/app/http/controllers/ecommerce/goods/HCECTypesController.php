@@ -134,6 +134,12 @@ class HCECTypesController extends HCBaseController
         array_set($data, 'translations', $translations);
         array_set($data, 'categories', array_get($_data, 'categories', []));
 
+        if( empty(array_get($_data, 'categories', [])) ) {
+            array_set($data, 'categories', []);
+        } else {
+            array_set($data, 'categories', array_get($_data, 'categories', []));
+        }
+
         return makeEmptyNullable($data);
     }
 
