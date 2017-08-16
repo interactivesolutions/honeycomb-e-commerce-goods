@@ -3,10 +3,8 @@
 namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce;
 
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
-use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributesTranslations;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECManufacturers;
-use interactivesolutions\honeycombgalleries\app\models\Galleries;
 use interactivesolutions\honeycombregions\app\models\regions\HCCountries;
 
 class HCECGoodsForm
@@ -35,6 +33,15 @@ class HCECGoodsForm
                 ],
             ],
             'structure'  => [
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "translations.label",
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.label"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "tabID"           => trans('HCTranslations::core.translations'),
+                    "multiLanguage"   => 1,
+                ],
                 [
                     "type"            => "dropDownList",
                     "fieldID"         => "type_id",
@@ -67,29 +74,14 @@ class HCECGoodsForm
                     "requiredVisible" => 0,
                 ],
                 [
-                    "type"            => "singleLine",
-                    "fieldID"         => "price_before_tax",
-                    "tabID"           => trans('HCTranslations::core.price'),
-                    "label"           => trans("HCECommerceGoods::e_commerce_goods.price_before_tax"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                ],
-                [
-                    "type"            => "singleLine",
-                    "fieldID"         => "price",
-                    "tabID"           => trans('HCTranslations::core.price'),
-                    "label"           => trans("HCECommerceGoods::e_commerce_goods.price"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                ],
-                [
                     "type"            => "dropDownList",
                     "fieldID"         => "country_id",
                     "tabID"           => trans('HCTranslations::core.price'),
-                    "label"           => trans("HCECommerceGoods::e_commerce_taxes.country_id"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.country_id"),
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "options"         => HCCountries::select('id', 'translation_key')->get(),
+                    "value"           => app()->getLocale(),
                     "search"          => [
                         "maximumSelectionLength" => 1,
                         "minimumSelectionLength" => 1,
@@ -114,6 +106,14 @@ class HCECGoodsForm
                             "options_url" => route('admin.api.e.commerce.taxes.list'),
                         ],
                     ],
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "price",
+                    "tabID"           => trans('HCTranslations::core.price'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.price"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
                 ],
                 [
                     "type"            => "dropDownList",
@@ -161,15 +161,6 @@ class HCECGoodsForm
                         "minimumSelectionLength" => 1,
                         "showNodes"              => ["name"],
                     ],
-                ],
-                [
-                    "type"            => "singleLine",
-                    "fieldID"         => "translations.label",
-                    "label"           => trans("HCECommerceGoods::e_commerce_goods.label"),
-                    "required"        => 1,
-                    "requiredVisible" => 1,
-                    "tabID"           => trans('HCTranslations::core.translations'),
-                    "multiLanguage"   => 1,
                 ],
                 [
                     "type"            => "textArea",
@@ -234,17 +225,30 @@ class HCECGoodsForm
         if( ! $edit )
             return $form;
 
+
+        $slug = [
+            "type"            => "singleLine",
+            "fieldID"         => "translations.slug",
+            "label"           => trans("HCECommerceGoods::e_commerce_goods.slug"),
+            "required"        => 1,
+            "requiredVisible" => 1,
+            "tabID"           => trans('HCTranslations::core.translations'),
+            "multiLanguage"   => 1,
+        ];
+
+        $priceBT =  [
+            "type"            => "singleLine",
+            "fieldID"         => "price_before_tax",
+            "tabID"           => trans('HCTranslations::core.price'),
+            "label"           => trans("HCECommerceGoods::e_commerce_goods.price_before_tax"),
+            "readonly"        => 1,
+            "required"        => 0,
+            "requiredVisible" => 0,
+        ];
+
         //Make changes to edit form if needed
-        $form['structure'][] =
-            [
-                "type"            => "singleLine",
-                "fieldID"         => "translations.slug",
-                "label"           => trans("HCECommerceGoods::e_commerce_goods.slug"),
-                "required"        => 1,
-                "requiredVisible" => 1,
-                "tabID"           => trans('HCTranslations::core.translations'),
-                "multiLanguage"   => 1,
-            ];
+        $form['structure'][] = $slug;
+        $form['structure'][] = $priceBT;
 
         $form['structure'] = array_merge($form['structure'], $this->getAttributesForm());
 

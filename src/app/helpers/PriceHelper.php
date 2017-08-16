@@ -91,7 +91,7 @@ class PriceHelper
      */
     public static function calcTaxes($priceWithTaxes, $tax)
     {
-        $originalPrice = $priceWithTaxes - ($priceWithTaxes * ($tax / 100));
+        $originalPrice = $priceWithTaxes / (1 + $tax * 0.01);
 
         $taxAmount = $priceWithTaxes - $originalPrice;
 
@@ -107,7 +107,7 @@ class PriceHelper
      */
     public static function addTaxes($price, $tax)
     {
-        return $price + ($price * $tax / 100);
+        return $price + $price * $tax * 0.01;
     }
 
     /**

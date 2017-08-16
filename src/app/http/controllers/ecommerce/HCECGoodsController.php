@@ -3,6 +3,7 @@
 use Doctrine\Common\Annotations\Annotation\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
+use interactivesolutions\honeycombecommercegoods\app\helpers\PriceHelper;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECDynamicAttributes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
@@ -155,19 +156,16 @@ class HCECGoodsController extends HCBaseController
         array_set($data, 'record.country_id', array_get($_data, 'country_id'));
         array_set($data, 'record.gallery_id', array_get($_data, 'gallery_id'));
         array_set($data, 'record.manufacturer_id', array_get($_data, 'manufacturer_id'));
+        array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
 
         $price = floatval(array_get($_data, 'price'));
-        $priceBeforeTax = floatval(array_get($_data, 'price_before_tax'));
-        $tax = HCECTaxes::find(array_get($_data, 'tax_id'))->value;
-        
-        if( isset($price) && $price > 0 )
-            $priceBeforeTax = $price / (1 + $tax * 0.01);
-        else if( isset($priceBeforeTax) && $priceBeforeTax > 0 )
-            $price = $priceBeforeTax * (1 + $tax * 0.01);
+        $tax   = HCECTaxes::findOrFail(array_get($_data, 'tax_id'));
+
+        list($priceBeforeTax, $taxAmount) = PriceHelper::calcTaxes($price, $tax->value);
 
         array_set($data, 'record.price', $price);
-        array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
         array_set($data, 'record.price_before_tax', $priceBeforeTax);
+        array_set($data, 'record.price_tax_amount', $taxAmount);
 
         $translations = array_get($_data, 'translations', []);
 
@@ -202,6 +200,9 @@ class HCECGoodsController extends HCBaseController
             ->select($select)
             ->where('id', $id)
             ->firstOrFail();
+
+        $record->price = PriceHelper::truncate($record->price);
+        $record->price_before_tax = PriceHelper::truncate($record->price_before_tax);
 
         // get attributes
         // merge attributes to record
