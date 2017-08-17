@@ -14,7 +14,7 @@ class AddSequenceFieldToHcGoodsAttributesTable extends Migration
     public function up()
     {
         Schema::table('hc_goods_attributes', function (Blueprint $table) {
-            $table->integer('sequence')->nullable();
+            $table->integer('sequence')->default(0);
         });
     }
 
