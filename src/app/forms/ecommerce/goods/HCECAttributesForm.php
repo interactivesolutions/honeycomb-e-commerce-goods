@@ -122,7 +122,8 @@ class HCECAttributesForm
                                 'field_value' => "0",
                             ],
                         ],
-                ], [
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "max_select",
                     "tabID"           => trans('HCTranslations::core.general'),
@@ -135,7 +136,16 @@ class HCECAttributesForm
                             'field_value' => "0",
                         ],
                     ],
-                ], [
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "sequence",
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.sequence"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                ],
+                [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.label",
                     "tabID"           => trans('HCTranslations::core.translations'),

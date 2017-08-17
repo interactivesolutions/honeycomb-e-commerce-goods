@@ -15,6 +15,7 @@ return [
     'is_boolean'      => 'Is boolean',
     'type_id'         => 'Type',
     'resource_id'     => 'Resource',
+    'sequence'        => 'Sequence',
 
     'errors' => [
         'boolean_input' => "When boolean is than dynamic must be 'yes' and multilangage must be 'no'",

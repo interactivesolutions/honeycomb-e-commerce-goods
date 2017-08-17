@@ -20,7 +20,7 @@ class HCECAttributes extends HCMultiLanguageModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'dynamic', 'min_select', 'max_select', 'multilanguage', 'is_boolean', 'resource_id'];
+    protected $fillable = ['id', 'dynamic', 'min_select', 'max_select', 'multilanguage', 'is_boolean', 'resource_id', 'sequence'];
 
     /**
      * Values

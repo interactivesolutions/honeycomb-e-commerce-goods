@@ -74,17 +74,21 @@ class HCECAttributesController extends HCBaseController
 //                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.is_boolean'),
 //                "url"   => route('admin.api.e.commerce.goods.attributes.update.strict', 'id')
 //            ],
-            'translations.{lang}.description'     => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.description'),
-            ],
+//            'translations.{lang}.description'     => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.description'),
+//            ],
             'translations.{lang}.label'           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.label'),
             ],
-            'translations.{lang}.slug'            => [
+//            'translations.{lang}.slug'            => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.slug'),
+//            ],
+            'sequence'                          => [
                 "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.slug'),
+                "label" => trans('HCECommerceGoods::e_commerce_goods_attributes.sequence'),
             ],
         ];
     }
@@ -143,6 +147,7 @@ class HCECAttributesController extends HCBaseController
         array_set($data, 'record.max_select', array_get($_data, 'max_select'));
         array_set($data, 'record.multilanguage', array_get($_data, 'multilanguage'));
         array_set($data, 'record.resource_id', array_get($_data, 'resource_id'));
+        array_set($data, 'record.sequence', array_get($_data, 'sequence'));
         array_set($data, 'types', array_get($_data, 'types') ?? []);
 
         $translations = array_get($_data, 'translations');
