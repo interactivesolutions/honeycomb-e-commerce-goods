@@ -87,10 +87,10 @@ class HCECGoodsController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.tax_id'),
             ],
-            'price_before_tax'          => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods.price_before_tax'),
-            ],
+//            'price_before_tax'          => [
+//                "type"  => "text",
+//                "label" => trans('HCECommerceGoods::e_commerce_goods.price_before_tax'),
+//            ],
             'deposit_id'                => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.deposit_id'),

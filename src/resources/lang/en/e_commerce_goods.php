@@ -5,7 +5,7 @@ return [
     'virtual'           => 'Virtual',
     'reference'         => 'Reference',
     'ean_13'            => 'Ean 13',
-    'price'             => 'Price',
+    'price'             => 'Price €',
     'tax_id'            => 'Tax',
     'price_before_tax'  => 'Price before tax',
     'deposit_id'        => 'Deposit',
