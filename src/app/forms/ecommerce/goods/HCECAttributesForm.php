@@ -35,8 +35,8 @@ class HCECAttributesForm
                     "fieldID"         => "types",
                     "tabID"           => trans('HCTranslations::core.general'),
                     "label"           => trans("HCECommerceGoods::e_commerce_goods_attributes.types"),
-                    "required"        => 1,
-                    "requiredVisible" => 1,
+                    "required"        => 0,
+                    "requiredVisible" => 0,
                     "options"         => HCECTypes::with('translations')->get(),
                     "search"          => [
                         "maximumSelectionLength" => 10,

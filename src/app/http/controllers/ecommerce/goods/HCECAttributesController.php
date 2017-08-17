@@ -143,7 +143,7 @@ class HCECAttributesController extends HCBaseController
         array_set($data, 'record.max_select', array_get($_data, 'max_select'));
         array_set($data, 'record.multilanguage', array_get($_data, 'multilanguage'));
         array_set($data, 'record.resource_id', array_get($_data, 'resource_id'));
-        array_set($data, 'types', array_get($_data, 'types'));
+        array_set($data, 'types', array_get($_data, 'types') ?? []);
 
         $translations = array_get($_data, 'translations');
 
