@@ -171,6 +171,8 @@ class HCECGoodsController extends HCBaseController
         array_set($data, 'record.gallery_id', array_get($_data, 'gallery_id'));
         array_set($data, 'record.manufacturer_id', array_get($_data, 'manufacturer_id'));
         array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
+        array_set($data, 'record.active', request()->has('active') ? '1' : '0');
+        array_set($data, 'record.promoted', request()->has('promoted') ? '1' : '0');
 
         $price = floatval(array_get($_data, 'price'));
         $tax = HCECTaxes::findOrFail(array_get($_data, 'tax_id'));

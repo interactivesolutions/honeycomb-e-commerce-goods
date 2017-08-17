@@ -33,6 +33,8 @@ class HCECGoodsForm
                 ],
             ],
             'structure'  => [
+                formManagerCheckBox('active', trans("HCECommerceGoods::e_commerce_goods.active"), 0, 0, trans("HCTranslations::core.translations")),
+                formManagerCheckBox('promoted', trans("HCECommerceGoods::e_commerce_goods.promoted"), 0, 0, trans("HCTranslations::core.translations")),
                 [
                     "type"            => "singleLine",
                     "fieldID"         => "translations.label",
