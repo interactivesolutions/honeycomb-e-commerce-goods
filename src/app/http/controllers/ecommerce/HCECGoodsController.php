@@ -59,11 +59,11 @@ class HCECGoodsController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
-            'translations.{lang}.label' => [
+            'translations.{lang}.label'      => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.label'),
             ],
-            'type.translations.{lang}.label'                   => [
+            'type.translations.{lang}.label' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.type_id'),
             ],
@@ -71,19 +71,19 @@ class HCECGoodsController extends HCBaseController
 //                "type"  => "text",
 //                "label" => trans('HCECommerceGoods::e_commerce_goods.virtual'),
 //            ],
-            'reference'                 => [
+            'reference'                      => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.reference'),
             ],
-            'ean_13'                    => [
+            'ean_13'                         => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.ean_13'),
             ],
-            'price'                     => [
+            'price'                          => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.price'),
             ],
-            'tax.value'                    => [
+            'tax.value'                      => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.tax_id'),
             ],
@@ -91,15 +91,15 @@ class HCECGoodsController extends HCBaseController
 //                "type"  => "text",
 //                "label" => trans('HCECommerceGoods::e_commerce_goods.price_before_tax'),
 //            ],
-            'deposit_id'                => [
+            'deposit_id'                     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.deposit_id'),
             ],
-            'country_id'                => [
+            'country_id'                     => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.country_id'),
             ],
-            'manufacturer.name'           => [
+            'manufacturer.name'              => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods.manufacturer_id'),
             ],
@@ -162,7 +162,7 @@ class HCECGoodsController extends HCBaseController
         array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
 
         $price = floatval(array_get($_data, 'price'));
-        $tax   = HCECTaxes::findOrFail(array_get($_data, 'tax_id'));
+        $tax = HCECTaxes::findOrFail(array_get($_data, 'tax_id'));
 
         list($priceBeforeTax, $taxAmount) = PriceHelper::calcTaxes($price, $tax->value);
 
@@ -352,21 +352,17 @@ class HCECGoodsController extends HCBaseController
      */
     protected function searchQuery(Builder $query, string $phrase)
     {
-        $r = HCECGoods::getTableName();
-        $t = HCECGoodsTranslations::getTableName();
-
         $query->where(function (Builder $query) use ($phrase) {
             $query->where('type_id', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('virtual', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('reference', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('ean_13', 'LIKE', '%' . $phrase . '%')
                 ->orWhere('price', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('price_before_tax', 'LIKE', '%' . $phrase . '%')
-                ->orWhere('country_id', 'LIKE', '%' . $phrase . '%');
+                ->orWhereHas('translations', function ($query) use ($phrase) {
+                    $query->where("label", 'LIKE', '%' . $phrase . '%');
+                });
         });
 
-        return $query->join($t, "$r.id", "=", "$t.record_id")
-            ->where('label', 'LIKE', '%' . $phrase . '%');
+        return $query;
     }
 
     /**
