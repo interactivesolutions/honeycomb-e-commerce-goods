@@ -119,20 +119,31 @@ class HCECGoods extends HCMultiLanguageModel
     /**
      * Update product images with related combination images
      *
-     * @param array $newImageIds
+     * @param array $newImages
      */
-    public function updateImages(array $newImageIds)
+    public function updateImages(array $newImages)
     {
         // trim empty values
-        $newImageIds = array_map('trim', $newImageIds);
+        $newImageIds = [];
+
+        $i = 0;
+        foreach ( $newImages as $newImage ) {
+            if( ! $newImage ) {
+                continue;
+            }
+
+            $newImageIds[$newImage] = [
+                'position' => $i++,
+            ];
+        }
 
         // generate thumb images with 85% quality
         $this->generateImageThumbs($newImageIds);
 
-        $currentIds = $this->images()->pluck('id')->all();
+        $currentIds = $this->images()->pluck('id', 'position')->all();
 
         // find array differences
-        $imagesToRemove = array_diff($currentIds, $newImageIds);
+        $imagesToRemove = array_diff($currentIds, array_keys($newImageIds));
 
         if( count($imagesToRemove) ) {
             foreach ( $this->combinations()->get() as $combination ) {

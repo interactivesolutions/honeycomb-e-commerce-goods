@@ -208,7 +208,7 @@ class HCECGoodsController extends HCBaseController
     public function apiShow(string $id)
     {
         $with = ['translations', 'images' => function ($query) {
-            $query->select('id');
+            $query->select('id')->orderBy('position');
         }, 'related'];
 
         $select = HCECGoods::getFillableFields(true);
