@@ -206,7 +206,7 @@ class HCECGoodsController extends HCBaseController
 
         // get attributes
         // merge attributes to record
-        $dynamic = HCECAttributes::isDynamic()->pluck('multilanguage', 'id');
+        $dynamic = HCECAttributes::isDynamicAttributes()->pluck('multilanguage', 'id');
 
         foreach ( $dynamic as $attributeId => $isMultiLanguage ) {
             $goods = HCECDynamicAttributes::where('attribute_id', $attributeId)->where('goods_id', $id)->first();
@@ -424,14 +424,13 @@ class HCECGoodsController extends HCBaseController
         }
 
         // get all not selected attributes and set their value to 0
-        $attributeRecords = HCECAttributes::isDynamic()->where('is_boolean', 1)->pluck('id')->all();
+        $attributeRecords = HCECAttributes::isDynamicAttributes()->where('is_boolean', 1)->pluck('id')->all();
 
         $unusedAttributes = array_diff($attributeRecords, $usedAttributes);
 
         foreach ( $unusedAttributes as $unusedAttributeId ) {
             $attributes[$unusedAttributeId] = 0;
         }
-
 
         return $attributes;
     }

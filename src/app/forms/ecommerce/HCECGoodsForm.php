@@ -264,7 +264,7 @@ class HCECGoodsForm
     {
         $structure = [];
 
-        $attributes = HCECAttributes::with('translations')->isDynamic()->get()->map(function ($item, $key) {
+        $attributes = HCECAttributes::with('translations')->isDynamicAttributes()->get()->map(function ($item, $key) {
 
             $obj = new \stdClass();
             $obj->id = $item->id;

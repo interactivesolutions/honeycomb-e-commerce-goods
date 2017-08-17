@@ -86,4 +86,15 @@ class HCECAttributes extends HCMultiLanguageModel
     {
         return $query->where('dynamic', 1);
     }
+
+    /**
+     * Dynamic scope attributes which don't have any types assigned
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeIsDynamicAttributes($query)
+    {
+        return $query->where('dynamic', 1)->has('types', '=', 0);
+    }
 }
