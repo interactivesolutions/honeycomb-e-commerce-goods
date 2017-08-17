@@ -173,6 +173,7 @@ class HCECGoodsController extends HCBaseController
         array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
         array_set($data, 'record.active', request()->has('active') ? '1' : '0');
         array_set($data, 'record.promoted', request()->has('promoted') ? '1' : '0');
+        array_set($data, 'related', array_get($_data, 'related') ?? []);
 
         $price = floatval(array_get($_data, 'price'));
         $tax = HCECTaxes::findOrFail(array_get($_data, 'tax_id'));
@@ -208,7 +209,7 @@ class HCECGoodsController extends HCBaseController
     {
         $with = ['translations', 'images' => function ($query) {
             $query->select('id');
-        }];
+        }, 'related'];
 
         $select = HCECGoods::getFillableFields(true);
 
@@ -265,6 +266,7 @@ class HCECGoodsController extends HCBaseController
         $record->update(array_get($data, 'record', []));
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
+        $record->updateRelatedGoods(array_get($data, 'related'));
 
         $this->updateDynamicAttributes($id, $data);
 

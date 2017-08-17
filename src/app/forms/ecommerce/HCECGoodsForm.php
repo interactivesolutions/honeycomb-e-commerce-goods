@@ -4,6 +4,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\forms\ecommerce;
 
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECManufacturers;
 use interactivesolutions\honeycombregions\app\models\regions\HCCountries;
 
@@ -165,6 +166,21 @@ class HCECGoodsForm
                     ],
                 ],
                 [
+                    "type"            => "dropDownList",
+                    "fieldID"         => "related",
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.related_goods"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "options"         => HCECGoods::with('translations')->isActive()->get(),
+                    "sortable"        => true,
+                    "search"          => [
+                        "maximumSelectionLength" => 10,
+                        "minimumSelectionLength" => 1,
+                        "showNodes"              => ["translations.{lang}.label"],
+                    ],
+                ],
+                [
                     "type"            => "textArea",
                     "fieldID"         => "translations.short_description",
                     "label"           => trans("HCECommerceGoods::e_commerce_goods.short_description"),
@@ -241,7 +257,7 @@ class HCECGoodsForm
             "multiLanguage"   => 1,
         ];
 
-        $priceBT =  [
+        $priceBT = [
             "type"            => "singleLine",
             "fieldID"         => "price_before_tax",
             "tabID"           => trans('HCTranslations::core.price'),

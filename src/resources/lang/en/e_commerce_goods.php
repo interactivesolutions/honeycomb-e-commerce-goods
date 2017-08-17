@@ -22,4 +22,5 @@ return [
     'additional_info'   => 'Additional information',
     'active'            => 'Active',
     'promoted'          => 'Promoted',
+    'related_goods'     => 'Related goods',
 ];
