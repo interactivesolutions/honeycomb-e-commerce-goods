@@ -126,9 +126,12 @@ class HCECGoodsController extends HCBaseController
     protected function __apiStore()
     {
         $data = $this->getInputData();
+
         $record = HCECGoods::create(array_get($data, 'record', []));
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
+
+        $this->updateDynamicAttributes($record->id, $data);
 
         return $this->apiShow($record->id);
     }
@@ -250,31 +253,7 @@ class HCECGoodsController extends HCBaseController
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
 
-        $translations = array_pull($data, 'attributes.translations', []);
-
-        foreach ( $translations as $lang => $attributes ) {
-            foreach ( $attributes as $attributeId => $value ) {
-                $dynamicAttribute = HCECDynamicAttributes::firstOrCreate([
-                    'attribute_id' => $attributeId,
-                    'goods_id'     => $id,
-                ]);
-
-                $dynamicAttribute->updateTranslation([
-                    'language_code' => $lang,
-                    'value'         => $value,
-                ]);
-            }
-        }
-
-        foreach ( array_get($data, 'attributes', []) as $attributeId => $value ) {
-            $dynamicAttribute = HCECDynamicAttributes::firstOrNew([
-                'attribute_id' => $attributeId,
-                'goods_id'     => $id,
-            ]);
-
-            $dynamicAttribute->value = $value;
-            $dynamicAttribute->save();
-        }
+        $this->updateDynamicAttributes($id, $data);
 
         return hcSuccess(trans('HCTranslations::core.updated'));
     }
@@ -433,5 +412,40 @@ class HCECGoodsController extends HCBaseController
         }
 
         return $attributes;
+    }
+
+    /**
+     * Update dynamic goods attributes
+     *
+     * @param string $goodsId
+     * @param $data
+     */
+    protected function updateDynamicAttributes(string $goodsId, $data)
+    {
+        $translations = array_pull($data, 'attributes.translations', []);
+
+        foreach ( $translations as $lang => $attributes ) {
+            foreach ( $attributes as $attributeId => $value ) {
+                $dynamicAttribute = HCECDynamicAttributes::firstOrCreate([
+                    'attribute_id' => $attributeId,
+                    'goods_id'     => $goodsId,
+                ]);
+
+                $dynamicAttribute->updateTranslation([
+                    'language_code' => $lang,
+                    'value'         => $value,
+                ]);
+            }
+        }
+
+        foreach ( array_get($data, 'attributes', []) as $attributeId => $value ) {
+            $dynamicAttribute = HCECDynamicAttributes::firstOrNew([
+                'attribute_id' => $attributeId,
+                'goods_id'     => $goodsId,
+            ]);
+
+            $dynamicAttribute->value = $value;
+            $dynamicAttribute->save();
+        }
     }
 }

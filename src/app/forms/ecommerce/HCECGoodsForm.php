@@ -222,6 +222,9 @@ class HCECGoodsForm
         if( $this->multiLanguage )
             $form['availableLanguages'] = getHCContentLanguages();
 
+        // add attributes tab to form
+        $form['structure'] = array_merge($form['structure'], $this->getAttributesForm());
+
         if( ! $edit )
             return $form;
 
@@ -249,8 +252,6 @@ class HCECGoodsForm
         //Make changes to edit form if needed
         $form['structure'][] = $slug;
         $form['structure'][] = $priceBT;
-
-        $form['structure'] = array_merge($form['structure'], $this->getAttributesForm());
 
         return $form;
     }
