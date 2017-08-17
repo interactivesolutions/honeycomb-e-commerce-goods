@@ -6,6 +6,7 @@ use interactivesolutions\honeycombcore\http\controllers\HCBaseController;
 use interactivesolutions\honeycombecommercegoods\app\helpers\PriceHelper;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECAttributes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECDynamicAttributes;
+use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoodsTranslations;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECTaxes;
@@ -114,6 +115,16 @@ class HCECGoodsController extends HCBaseController
     public function getFilters()
     {
         $filters = [];
+
+        $types = [
+            'fieldID' => 'type_id',
+            'type' => 'dropDownList',
+            'label' => trans('HCECommerceGoods::e_commerce_goods.type_id'),
+            'options' => HCECTypes::with('translations')->get()->toArray(),
+            'showNodes' => ['translations.{lang}.label']
+        ];
+
+        $filters[] = addAllOptionToDropDownList($types);
 
         return $filters;
     }
