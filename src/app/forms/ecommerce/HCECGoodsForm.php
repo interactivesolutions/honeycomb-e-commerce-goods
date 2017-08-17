@@ -176,7 +176,6 @@ class HCECGoodsForm
                     "sortable"        => true,
                     "search"          => [
                         "maximumSelectionLength" => 10,
-                        "minimumSelectionLength" => 1,
                         "showNodes"              => ["translations.{lang}.label"],
                     ],
                 ],
@@ -283,7 +282,7 @@ class HCECGoodsForm
     {
         $structure = [];
 
-        $attributes = HCECAttributes::with('translations')->isDynamicAttributes()->get()->map(function ($item, $key) {
+        $attributes = HCECAttributes::with('translations')->isDynamicAttributes()->orderBy('sequence')->get()->map(function ($item, $key) {
 
             $obj = new \stdClass();
             $obj->id = $item->id;
