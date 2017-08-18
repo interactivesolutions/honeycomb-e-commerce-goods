@@ -180,7 +180,7 @@ class HCECGoodsForm
                     ],
                 ],
                 [
-                    "type"            => "textArea",
+                    "type"            => "richTextArea",
                     "fieldID"         => "translations.short_description",
                     "label"           => trans("HCECommerceGoods::e_commerce_goods.short_description"),
                     "required"        => 0,
