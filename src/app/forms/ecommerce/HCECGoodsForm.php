@@ -173,7 +173,7 @@ class HCECGoodsForm
                     "required"        => 0,
                     "requiredVisible" => 0,
                     "options"         => HCECGoods::with('translations')->isActive()->get(),
-                    "sortable"        => true,
+                    "sortable"        => false,
                     "search"          => [
                         "maximumSelectionLength" => 10,
                         "showNodes"              => ["translations.{lang}.label"],
