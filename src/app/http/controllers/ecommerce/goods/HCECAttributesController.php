@@ -158,7 +158,7 @@ class HCECAttributesController extends HCBaseController
 
         array_set($data, 'translations', $translations);
 
-        return makeEmptyNullable($data);
+        return makeEmptyNullable($data, true);
     }
 
     /**
