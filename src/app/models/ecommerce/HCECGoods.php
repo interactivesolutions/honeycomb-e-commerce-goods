@@ -6,6 +6,7 @@ use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\combinations\HCECCombinations;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\rules\HCECPriceRulesAffectedItems;
+use interactivesolutions\honeycombecommercewarehouse\app\models\ecommerce\warehouses\stock\HCECStockSummary;
 use interactivesolutions\honeycombresources\app\models\HCResources;
 
 class HCECGoods extends HCMultiLanguageModel
@@ -84,7 +85,6 @@ class HCECGoods extends HCMultiLanguageModel
         return $this->hasMany(HCECCombinations::class, 'goods_id');
     }
 
-
     /**
      * Relation to product images
      *
@@ -103,6 +103,16 @@ class HCECGoods extends HCMultiLanguageModel
     public function related()
     {
         return $this->belongsToMany(HCECGoods::class, HCECGoodsRelated::getTableName(), 'goods_id', 'related_goods_id')->withTimestamps()->withPivot('sequence');
+    }
+
+    /**
+     * Belongs to manufacturer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function stock_summary()
+    {
+        return $this->hasOne(HCECStockSummary::class, 'good_id', 'id');
     }
 
     /**
