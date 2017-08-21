@@ -39,7 +39,7 @@ class HCECAttributesForm
                     "requiredVisible" => 0,
                     "options"         => HCECTypes::with('translations')->get(),
                     "search"          => [
-                        "maximumSelectionLength" => 10,
+                        "maximumSelectionLength" => 100,
                         "minimumSelectionLength" => 1,
                         "showNodes"              => ["translations.{lang}.label"],
                     ],
