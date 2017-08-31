@@ -49,6 +49,20 @@ class PriceHelper
     }
 
     /**
+     * Get number in lithuanian language truncated, not rounded
+     *
+     * @param $price
+     * @param int $precision
+     * @return mixed
+     */
+    public static function inLtTruncated($price, $precision = 2)
+    {
+        $truncated = (new static())->truncate($price, $precision);
+
+        return str_replace(".", ",", $truncated);
+    }
+
+    /**
      * Replace comma in number (convert from LT price to normal number)
      *
      * @param $number
