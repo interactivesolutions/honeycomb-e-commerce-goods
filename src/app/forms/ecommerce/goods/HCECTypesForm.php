@@ -18,18 +18,28 @@ class HCECTypesForm
      * @param bool $edit
      * @return array
      */
-    public function createForm (bool $edit = false)
+    public function createForm(bool $edit = false)
     {
         $form = [
-            'storageURL' => route ('admin.api.e.commerce.goods.types'),
+            'storageURL' => route('admin.api.e.commerce.goods.types'),
             'buttons'    => [
                 [
                     "class" => "col-centered",
-                    "label" => trans ('HCTranslations::core.buttons.submit'),
+                    "label" => trans('HCTranslations::core.buttons.submit'),
                     "type"  => "submit",
                 ],
             ],
             'structure'  => [
+                formManagerCheckBox('active', trans("HCECommerceGoods::e_commerce_goods_types.active"), 0, 0, trans('HCTranslations::core.translations')),
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "sequence",
+                    "tabID"           => trans('HCTranslations::core.translations'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_types.sequence"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "multiLanguage"   => 0,
+                ],
                 [
                     "type"            => "dropDownList",
                     "fieldID"         => "categories",
@@ -48,50 +58,50 @@ class HCECTypesForm
                     "type"            => "singleLine",
                     "fieldID"         => "translations.label",
                     "tabID"           => trans('HCTranslations::core.translations'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.label"),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods_types.label"),
                     "required"        => 1,
                     "requiredVisible" => 1,
                     "multiLanguage"   => 1,
                 ], [
-                    "type"            => "textArea",
-                    "fieldID"         => "translations.description",
-                    "tabID"           => trans('HCTranslations::core.translations'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.description"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                    "multiLanguage"   => 1,
-                ], [
-                    "type"            => "singleLine",
-                    "fieldID"         => "translations.seo_title",
-                    "tabID"           => trans('HCTranslations::core.seo'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_title"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                    "multiLanguage"   => 1,
-                ], [
-                    "type"            => "singleLine",
-                    "fieldID"         => "translations.seo_description",
-                    "tabID"           => trans('HCTranslations::core.seo'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_description"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                    "multiLanguage"   => 1,
-                ], [
-                    "type"            => "singleLine",
-                    "fieldID"         => "translations.seo_keywords",
-                    "tabID"           => trans('HCTranslations::core.seo'),
-                    "label"           => trans ("HCECommerceGoods::e_commerce_goods_types.seo_keywords"),
-                    "required"        => 0,
-                    "requiredVisible" => 0,
-                    "multiLanguage"   => 1,
-                ],
+        "type"            => "textArea",
+        "fieldID"         => "translations.description",
+        "tabID"           => trans('HCTranslations::core.translations'),
+        "label"           => trans("HCECommerceGoods::e_commerce_goods_types.description"),
+        "required"        => 0,
+        "requiredVisible" => 0,
+        "multiLanguage"   => 1,
+    ], [
+        "type"            => "singleLine",
+        "fieldID"         => "translations.seo_title",
+        "tabID"           => trans('HCTranslations::core.seo'),
+        "label"           => trans("HCECommerceGoods::e_commerce_goods_types.seo_title"),
+        "required"        => 0,
+        "requiredVisible" => 0,
+        "multiLanguage"   => 1,
+    ], [
+        "type"            => "singleLine",
+        "fieldID"         => "translations.seo_description",
+        "tabID"           => trans('HCTranslations::core.seo'),
+        "label"           => trans("HCECommerceGoods::e_commerce_goods_types.seo_description"),
+        "required"        => 0,
+        "requiredVisible" => 0,
+        "multiLanguage"   => 1,
+    ], [
+        "type"            => "singleLine",
+        "fieldID"         => "translations.seo_keywords",
+        "tabID"           => trans('HCTranslations::core.seo'),
+        "label"           => trans("HCECommerceGoods::e_commerce_goods_types.seo_keywords"),
+        "required"        => 0,
+        "requiredVisible" => 0,
+        "multiLanguage"   => 1,
+    ],
             ],
         ];
 
-        if ($this->multiLanguage)
-            $form['availableLanguages'] = getHCContentLanguages ();
+        if( $this->multiLanguage )
+            $form['availableLanguages'] = getHCContentLanguages();
 
-        if (!$edit)
+        if( ! $edit )
             return $form;
 
         //Make changes to edit form if needed

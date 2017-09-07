@@ -39,4 +39,14 @@ class HCECCategories extends HCMultiLanguageModel
     {
         return $this->belongsToMany(HCECTypes::class, 'hc_goods_categories_types', 'goods_category_id', 'goods_type_id');
     }
+
+    /**
+     * Parent
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parent()
+    {
+        return $this->belongsTo(HCECCategories::class, 'parent_id', 'id');
+    }
 }

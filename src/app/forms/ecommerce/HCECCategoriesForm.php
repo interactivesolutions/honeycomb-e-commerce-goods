@@ -30,6 +30,16 @@ class HCECCategoriesForm
                 ],
             ],
             'structure'  => [
+                formManagerCheckBox('active', trans("HCECommerceGoods::e_commerce_categories.active"), 0, 0, trans('HCTranslations::core.general')),
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "sequence",
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_categories.sequence"),
+                    "required"        => 0,
+                    "requiredVisible" => 0,
+                    "multiLanguage"   => 0,
+                ],
                 [
                     "type"            => "resource",
                     "fieldID"         => "resource_id",

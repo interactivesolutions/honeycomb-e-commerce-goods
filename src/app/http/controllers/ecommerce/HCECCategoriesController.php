@@ -54,17 +54,17 @@ class HCECCategoriesController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
+            'active'                              => [
+                "type"  => "text",
+                "label" => trans('HCECommerceGoods::e_commerce_categories.active'),
+            ],
             'resource_id'                         => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_categories.resource_id'),
             ],
-            'parent_id'                           => [
+            'parent.translations.{lang}.label'                           => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_categories.parent_id'),
-            ],
-            'translations.{lang}.description'     => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_categories.description'),
             ],
             'translations.{lang}.label'           => [
                 "type"  => "text",
@@ -74,19 +74,10 @@ class HCECCategoriesController extends HCBaseController
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_categories.slug'),
             ],
-            'translations.{lang}.seo_title'       => [
+            'sequence'                            => [
                 "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_categories.seo_title'),
+                "label" => trans('HCECommerceGoods::e_commerce_categories.sequence'),
             ],
-            'translations.{lang}.seo_description' => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_categories.seo_description'),
-            ],
-            'translations.{lang}.seo_keywords'    => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_categories.seo_keywords'),
-            ],
-
         ];
     }
 
@@ -134,6 +125,9 @@ class HCECCategoriesController extends HCBaseController
 
         array_set($data, 'record.resource_id', array_get($_data, 'resource_id'));
         array_set($data, 'record.parent_id', array_get($_data, 'parent_id'));
+        array_set($data, 'record.sequence', array_get($_data, 'sequence'));
+        array_set($data, 'record.active', request()->has('active') ? '1' : '0');
+
 
         $translations = array_get($_data, 'translations');
 
@@ -254,7 +248,7 @@ class HCECCategoriesController extends HCBaseController
      */
     protected function createQuery(array $select = null)
     {
-        $with = ['translations'];
+        $with = ['translations', 'parent.translations'];
 
         if( $select == null )
             $select = HCECCategories::getFillableFields();

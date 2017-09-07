@@ -53,31 +53,22 @@ class HCECTypesController extends HCBaseController
     private function getAdminListHeader()
     {
         return [
-            'translations.{lang}.description'     => [
+            'active'                    => [
                 "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_types.description'),
+                "label" => trans('HCECommerceGoods::e_commerce_goods_types.active'),
             ],
-            'translations.{lang}.slug'            => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_types.slug'),
-            ],
-            'translations.{lang}.label'           => [
+            'translations.{lang}.label' => [
                 "type"  => "text",
                 "label" => trans('HCECommerceGoods::e_commerce_goods_types.label'),
             ],
-            'translations.{lang}.seo_title'       => [
+            'translations.{lang}.slug'  => [
                 "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_types.seo_title'),
+                "label" => trans('HCECommerceGoods::e_commerce_goods_types.slug'),
             ],
-            'translations.{lang}.seo_description' => [
+            'sequence'                  => [
                 "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_types.seo_description'),
+                "label" => trans('HCECommerceGoods::e_commerce_goods_types.sequence'),
             ],
-            'translations.{lang}.seo_keywords'    => [
-                "type"  => "text",
-                "label" => trans('HCECommerceGoods::e_commerce_goods_types.seo_keywords'),
-            ],
-
         ];
     }
 
@@ -123,6 +114,9 @@ class HCECTypesController extends HCBaseController
 
         if( array_has($_data, 'id') )
             array_set($data, 'record.id', array_get($_data, 'id'));
+
+        array_set($data, 'record.sequence', array_get($_data, 'sequence'));
+        array_set($data, 'record.active', request()->has('active') ? '1' : '0');
 
         $translations = array_get($_data, 'translations', []);
 
