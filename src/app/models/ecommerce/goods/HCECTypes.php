@@ -49,4 +49,26 @@ class HCECTypes extends HCMultiLanguageModel
     {
         return $this->hasMany(HCECGoods::class, 'type_id', 'id');
     }
+
+    /**
+     * Where is active
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeIsActive($query)
+    {
+        return $query->where('active', '1');
+    }
+
+    /**
+     * Where is not active
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeIsNotActive($query)
+    {
+        return $query->where('active', '0');
+    }
 }
