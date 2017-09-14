@@ -117,11 +117,11 @@ class HCECGoodsController extends HCBaseController
         $filters = [];
 
         $types = [
-            'fieldID' => 'type_id',
-            'type' => 'dropDownList',
-            'label' => trans('HCECommerceGoods::e_commerce_goods.type_id'),
-            'options' => HCECTypes::with('translations')->get()->toArray(),
-            'showNodes' => ['translations.{lang}.label']
+            'fieldID'   => 'type_id',
+            'type'      => 'dropDownList',
+            'label'     => trans('HCECommerceGoods::e_commerce_goods.type_id'),
+            'options'   => HCECTypes::with('translations')->get()->toArray(),
+            'showNodes' => ['translations.{lang}.label'],
         ];
 
         $filters[] = addAllOptionToDropDownList($types);
@@ -179,6 +179,10 @@ class HCECGoodsController extends HCBaseController
         $tax = HCECTaxes::findOrFail(array_get($_data, 'tax_id'));
 
         list($priceBeforeTax, $taxAmount) = PriceHelper::calcTaxes($price, $tax->value);
+
+        if( $taxAmount == 0 ) {
+            $taxAmount = "0";
+        }
 
         array_set($data, 'record.price', $price);
         array_set($data, 'record.price_before_tax', $priceBeforeTax);
