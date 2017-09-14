@@ -8,6 +8,7 @@ return [
     'price'             => 'Price €',
     'tax_id'            => 'Tax',
     'price_before_tax'  => 'Price before tax',
+    'price_tax_amount'  => 'Price tax amount',
     'deposit_id'        => 'Deposit',
     'country_id'        => 'Country',
     'images'            => 'Images',

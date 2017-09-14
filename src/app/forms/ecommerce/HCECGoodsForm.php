@@ -266,9 +266,20 @@ class HCECGoodsForm
             "requiredVisible" => 0,
         ];
 
+        $priceTA = [
+            "type"            => "singleLine",
+            "fieldID"         => "price_tax_amount",
+            "tabID"           => trans('HCTranslations::core.price'),
+            "label"           => trans("HCECommerceGoods::e_commerce_goods.price_tax_amount"),
+            "readonly"        => 1,
+            "required"        => 0,
+            "requiredVisible" => 0,
+        ];
+
         //Make changes to edit form if needed
         $form['structure'][] = $slug;
         $form['structure'][] = $priceBT;
+        $form['structure'][] = $priceTA;
 
         return $form;
     }

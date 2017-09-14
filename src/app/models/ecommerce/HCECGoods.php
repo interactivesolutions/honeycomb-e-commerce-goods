@@ -23,7 +23,7 @@ class HCECGoods extends HCMultiLanguageModel
      *
      * @var array
      */
-    protected $fillable = ['id', 'active', 'promoted', 'type_id', 'virtual', 'reference', 'ean_13', 'price', 'tax_id', 'price_before_tax', 'deposit_id', 'country_id', 'gallery_id', 'manufacturer_id'];
+    protected $fillable = ['id', 'active', 'promoted', 'type_id', 'virtual', 'reference', 'ean_13', 'price', 'tax_id', 'price_before_tax', 'price_tax_amount', 'deposit_id', 'country_id', 'gallery_id', 'manufacturer_id'];
 
     /**
      * Belongs to type

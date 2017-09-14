@@ -8,6 +8,7 @@ return [
     'price'             => 'Kaina €',
     'tax_id'            => 'Mokestis',
     'price_before_tax'  => 'Kaina be mokesčių',
+    'price_tax_amount'  => 'Mokesčių kiekis',
     'deposit_id'        => 'Depozitas',
     'country_id'        => 'Šalis',
     'images'            => 'Nuotraukos',
