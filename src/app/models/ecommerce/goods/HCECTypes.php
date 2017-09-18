@@ -6,6 +6,7 @@ use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECCategories;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
 use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECPriceRules;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECPriceRulesAffectedItems;
 
 class HCECTypes extends HCMultiLanguageModel
 {
@@ -24,11 +25,11 @@ class HCECTypes extends HCMultiLanguageModel
     protected $fillable = ['id', 'active', 'sequence'];
 
     /**
-     * Get all of the rules for the category.
+     * Get all of the rules for the types.
      */
     public function rules()
     {
-        return $this->morphToMany(HCECPriceRules::class, 'rulable', HCECPriceRulesAffectedItems::getTableName(), 'rulable_id', 'rule_id');
+        return $this->morphToMany(HCECPriceRules::class, 'rulable', HCECPriceRulesAffectedItems::getTableName(), 'rulable_id', 'rule_id')->isActiveRule();
     }
 
     /**

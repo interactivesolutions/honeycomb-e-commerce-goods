@@ -27,11 +27,11 @@ class HCECGoods extends HCMultiLanguageModel
     protected $fillable = ['id', 'active', 'promoted', 'type_id', 'virtual', 'reference', 'ean_13', 'price', 'tax_id', 'price_before_tax', 'price_tax_amount', 'deposit_id', 'country_id', 'gallery_id', 'manufacturer_id'];
 
     /**
-     * Get all of the rules for the category.
+     * Get all of the rules for the goods.
      */
     public function rules()
     {
-        return $this->morphToMany(HCECPriceRules::class, 'rulable', HCECPriceRulesAffectedItems::getTableName(), 'rulable_id', 'rule_id');
+        return $this->morphToMany(HCECPriceRules::class, 'rulable', HCECPriceRulesAffectedItems::getTableName(), 'rulable_id', 'rule_id')->isActiveRule();
     }
 
     /**
