@@ -28,7 +28,7 @@ class HCECTypes extends HCMultiLanguageModel
      */
     public function rules()
     {
-        return $this->morphToMany(HCECPriceRules::class, 'rulable');
+        return $this->morphToMany(HCECPriceRules::class, 'rulable', HCECPriceRulesAffectedItems::getTableName(), 'rulable_id', 'rule_id');
     }
 
     /**
