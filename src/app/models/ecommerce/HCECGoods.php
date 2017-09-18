@@ -5,7 +5,8 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce;
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\combinations\HCECCombinations;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
-use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\rules\HCECPriceRulesAffectedItems;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECPriceRules;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECPriceRulesAffectedItems;
 use interactivesolutions\honeycombecommercewarehouse\app\models\ecommerce\warehouses\stock\HCECStockSummary;
 use interactivesolutions\honeycombresources\app\models\HCResources;
 
@@ -24,6 +25,14 @@ class HCECGoods extends HCMultiLanguageModel
      * @var array
      */
     protected $fillable = ['id', 'active', 'promoted', 'type_id', 'virtual', 'reference', 'ean_13', 'price', 'tax_id', 'price_before_tax', 'price_tax_amount', 'deposit_id', 'country_id', 'gallery_id', 'manufacturer_id'];
+
+    /**
+     * Get all of the rules for the category.
+     */
+    public function rules()
+    {
+        return $this->morphToMany(HCECPriceRules::class, 'rulable');
+    }
 
     /**
      * Belongs to type
@@ -53,26 +62,6 @@ class HCECGoods extends HCMultiLanguageModel
     public function manufacturer()
     {
         return $this->belongsTo(HCECManufacturers::class, 'manufacturer_id', 'id');
-    }
-
-    /**
-     * Get all of the rules for the good.
-     *
-     * @return mixed
-     */
-    public function rules()
-    {
-        return $this->morphMany(HCECPriceRulesAffectedItems::class, 'rulable')->with('rule');
-    }
-
-    /**
-     * Get all of the categories for the good.
-     *
-     * @return mixed
-     */
-    public function categories()
-    {
-        return $this->morphMany(HCECPriceRulesAffectedItems::class, 'rulable')->with('rule');
     }
 
     /**

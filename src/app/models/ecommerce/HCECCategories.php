@@ -4,7 +4,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce;
 
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\HCECTypes;
-use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\goods\rules\HCECPriceRulesAffectedItems;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECPriceRules;
 
 class HCECCategories extends HCMultiLanguageModel
 {
@@ -27,7 +27,7 @@ class HCECCategories extends HCMultiLanguageModel
      */
     public function rules()
     {
-        return $this->morphMany(HCECPriceRulesAffectedItems::class, 'rulable');
+        return $this->morphToMany(HCECPriceRules::class, 'rulable');
     }
 
     /**

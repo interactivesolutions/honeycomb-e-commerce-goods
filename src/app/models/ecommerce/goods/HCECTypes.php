@@ -5,6 +5,7 @@ namespace interactivesolutions\honeycombecommercegoods\app\models\ecommerce\good
 use interactivesolutions\honeycombcore\models\HCMultiLanguageModel;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECCategories;
 use interactivesolutions\honeycombecommercegoods\app\models\ecommerce\HCECGoods;
+use interactivesolutions\honeycombecommercepricerules\app\models\ecommerce\HCECPriceRules;
 
 class HCECTypes extends HCMultiLanguageModel
 {
@@ -21,6 +22,14 @@ class HCECTypes extends HCMultiLanguageModel
      * @var array
      */
     protected $fillable = ['id', 'active', 'sequence'];
+
+    /**
+     * Get all of the rules for the category.
+     */
+    public function rules()
+    {
+        return $this->morphToMany(HCECPriceRules::class, 'rulable');
+    }
 
     /**
      * Categories
