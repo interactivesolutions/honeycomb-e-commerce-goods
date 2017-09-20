@@ -238,7 +238,7 @@ class HCPriceHelper
     public function currencyEndingInLt($number, $saknis = 'eur')
     {
         // round to integer
-        $number = $this->round($number, 0);
+        $number = $this->truncate($number, 0);
 
         if( $number < 0 || strlen($number) > 9 ) return;
 
