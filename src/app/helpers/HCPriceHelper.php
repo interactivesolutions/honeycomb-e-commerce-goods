@@ -279,4 +279,38 @@ class HCPriceHelper
 
         return "$word $currency $cents ct";
     }
+
+    /**
+     * @param float $number
+     * @param int $discount
+     * @param bool $round
+     * @return float|int|mixed|string
+     */
+    public function apply_percent_discount(float $number, int $discount, $round = true)
+    {
+        $number = $this->replaceComma($number);
+
+        $final = $number - $number * $discount * 0.01;
+
+        return $round ? $this->round($final) : $final;
+    }
+
+    /**
+     * @param float $number
+     * @param float $discount
+     * @param bool $round
+     * @return float|mixed|string
+     */
+    public function apply_amount_discount(float $number, float $discount, $round = true)
+    {
+        $number = $this->replaceComma($number);
+
+        $final = $number - $discount;
+
+        if( $final < 0 ) {
+            return $number;
+        }
+
+        return $round ? $this->round($final) : $final;
+    }
 }
