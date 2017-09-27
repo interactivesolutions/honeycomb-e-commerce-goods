@@ -211,9 +211,15 @@ class HCECGoodsController extends HCBaseController
      */
     public function apiShow(string $id)
     {
-        $with = ['translations', 'images' => function ($query) {
-            $query->select('id')->orderBy('position');
-        }, 'related'];
+        $with = [
+            'translations',
+            'images'  => function ($query) {
+                $query->select('id')->orderBy('position');
+            },
+            'related' => function ($query) {
+                $query->with('translations');
+            },
+        ];
 
         $select = HCECGoods::getFillableFields(true);
 
@@ -224,6 +230,7 @@ class HCECGoodsController extends HCBaseController
 
         $record->price = PriceHelper::truncate($record->price);
         $record->price_before_tax = PriceHelper::truncate($record->price_before_tax);
+        $record->price_tax_amount = PriceHelper::truncate($record->price_tax_amount);
 
         // get attributes
         // merge attributes to record

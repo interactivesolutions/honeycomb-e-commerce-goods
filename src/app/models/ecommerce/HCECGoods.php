@@ -94,7 +94,7 @@ class HCECGoods extends HCMultiLanguageModel
         return $this->belongsToMany(HCECGoods::class, HCECGoodsRelated::getTableName(), 'goods_id', 'related_goods_id')
             ->withTimestamps()
             ->withPivot('sequence')
-            ->orderBy('sequence');
+            ->orderBy( HCECGoodsRelated::getTableName() . '.sequence');
     }
 
     /**

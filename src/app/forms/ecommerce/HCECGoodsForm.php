@@ -172,8 +172,8 @@ class HCECGoodsForm
                     "label"           => trans("HCECommerceGoods::e_commerce_goods.related_goods"),
                     "required"        => 0,
                     "requiredVisible" => 0,
-                    "options"         => HCECGoods::with('translations')->isActive()->get(),
-                    "sortable"        => false,
+                    "options"         => HCECGoods::with('translations')->select('id')->isActive()->get(),
+                    "sortable"        => true,
                     "search"          => [
                         "maximumSelectionLength" => 10,
                         "showNodes"              => ["translations.{lang}.label"],
