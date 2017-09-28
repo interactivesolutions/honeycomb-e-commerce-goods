@@ -77,6 +77,52 @@ class HCECGoodsForm
                     "requiredVisible" => 0,
                 ],
                 [
+                    "type"            => "radioList",
+                    "fieldID"         => "allow_pre_order",
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.allow_pre_order"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "options"         => [
+                        [
+                            'id'    => '1',
+                            'label' => trans('HCTranslations::core.yes'),
+                        ],
+                        [
+                            'id'    => '0',
+                            'label' => trans('HCTranslations::core.no'),
+                        ],
+                    ],
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "pre_order_count",
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.pre_order_count"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "dependencies"    => [
+                        [
+                            'field_id'    => 'allow_pre_order',
+                            'field_value' => '1',
+                        ],
+                    ],
+                ],
+                [
+                    "type"            => "singleLine",
+                    "fieldID"         => "pre_order_days",
+                    "tabID"           => trans('HCTranslations::core.general'),
+                    "label"           => trans("HCECommerceGoods::e_commerce_goods.pre_order_days"),
+                    "required"        => 1,
+                    "requiredVisible" => 1,
+                    "dependencies"    => [
+                        [
+                            'field_id'    => 'allow_pre_order',
+                            'field_value' => '1',
+                        ],
+                    ],
+                ],
+                [
                     "type"            => "dropDownList",
                     "fieldID"         => "country_id",
                     "tabID"           => trans('HCTranslations::core.price'),

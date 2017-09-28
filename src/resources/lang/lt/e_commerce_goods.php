@@ -24,4 +24,7 @@ return [
     'active'            => 'Aktyvus',
     'promoted'          => 'Iškeltas',
     'related_goods'     => 'Susiję prekės',
+    'allow_pre_order'   => 'Pardavimas į minusą',
+    'pre_order_count'   => 'Pardavimo kiekis',
+    'pre_order_days'    => 'Prekės atvyks po dienų',
 ];

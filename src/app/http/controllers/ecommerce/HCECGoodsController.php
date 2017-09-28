@@ -173,6 +173,10 @@ class HCECGoodsController extends HCBaseController
         array_set($data, 'record.tax_id', array_get($_data, 'tax_id'));
         array_set($data, 'record.active', request()->has('active') ? '1' : '0');
         array_set($data, 'record.promoted', request()->has('promoted') ? '1' : '0');
+        array_set($data, 'record.allow_pre_order', array_get($_data, 'allow_pre_order'));
+        array_set($data, 'record.pre_order_count', array_get($_data, 'pre_order_count'));
+        array_set($data, 'record.pre_order_days', array_get($_data, 'pre_order_days'));
+
         array_set($data, 'related', array_get($_data, 'related') ?? []);
 
         $price = floatval(array_get($_data, 'price'));

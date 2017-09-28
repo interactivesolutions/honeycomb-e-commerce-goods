@@ -24,4 +24,7 @@ return [
     'active'            => 'Active',
     'promoted'          => 'Promoted',
     'related_goods'     => 'Related goods',
+    'allow_pre_order'   => 'Allow pre order',
+    'pre_order_count'   => 'Pre order count',
+    'pre_order_days'    => 'Pre order days',
 ];
