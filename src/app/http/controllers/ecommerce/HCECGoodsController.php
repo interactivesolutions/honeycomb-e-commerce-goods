@@ -141,6 +141,7 @@ class HCECGoodsController extends HCBaseController
         $record = HCECGoods::create(array_get($data, 'record', []));
         $record->updateTranslations(array_get($data, 'translations', []));
         $record->updateImages(array_get($data, 'images'));
+        $record->updateRelatedGoods(array_get($data, 'related'));
 
         $this->updateDynamicAttributes($record->id, $data);
 
