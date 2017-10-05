@@ -308,7 +308,7 @@ class HCPriceHelper
         $final = $number - $discount;
 
         if( $final < 0 ) {
-            return $number;
+            return 0.00;
         }
 
         return $round ? $this->round($final) : $final;
